@@ -2,13 +2,13 @@ import { useAsyncReducerState } from './index';
 import { renderHook, act } from '@testing-library/react-hooks'
 
 
-async function addToState(state: {count: number}, number: number) {;
-  return {count: state.count + number};
+async function addToState(state: {count: number}, num: number) {;
+  return {count: state.count + num};
 }
 
-async function subtractFromState(state: {count: number}, number: number) {
+async function subtractFromState(state: {count: number}, num: number) {
 
-  return {count: state.count - number};
+  return {count: state.count - num};
 }
 
 
@@ -38,7 +38,7 @@ test('basics', async () => {
 
   await waitForNextUpdate();
 
-  [currentState, processing,{subtract}] = result.current;
+  [currentState, processing,{add, subtract}] = result.current;
 
   expect(currentState.count).toBe(1);
 
@@ -66,7 +66,7 @@ test('queing', async ()=> {
 
   await waitForNextUpdate();
 
-  [currentState, processing,{subtract}] = result.current;
+  [currentState, processing,{add, subtract}] = result.current;
 
   expect(currentState.count).toBe(1);
 

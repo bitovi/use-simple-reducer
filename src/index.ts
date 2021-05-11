@@ -8,9 +8,7 @@ interface BaseActions<RetType> {
     [key: string]:  (...args: any[]) => RetType
 }
 // Given a parameter type, makes a first argument with that type
-type FunctionForFirstParamType<ParamType> = {
-    (arg0: ParamType): void
-}
+type FunctionForFirstParamType<ParamType> = (arg0: ParamType) => void
 
 export function useAsyncReducerState
     <
@@ -52,32 +50,34 @@ export function useAsyncReducerState
     const currentState = useRef<any>(state);
 
 
-    const {current: queue} = useRef<Array<any>>([]);
+    const {current: queue} = useRef<any[]>([]);
 
     const methods = {} as {[PropertyType in keyof Actions]: FunctionForFirstParamType<Parameters<Actions[PropertyType]>>};
 
     // implementation
-    for(let actionName in actions) {
-        methods[actionName] = (...args: any[])=> {
-            queue.push({
-                actionName: actionName,
-                action: actions[actionName],
-                args: args
-            });
-            if(!isProccessing.current) {
-                isProccessing.current = true;
-                setProcessing(true);
-                runNext();
-            }
-        };
+    for(const actionName in actions) {
+        if(Object.prototype.hasOwnProperty.call(actions, actionName)) {
+            methods[actionName] = (...args: any[])=> {
+                queue.push({
+                    actionName,
+                    action: actions[actionName],
+                    args
+                });
+                if(!isProccessing.current) {
+                    isProccessing.current = true;
+                    setProcessing(true);
+                    runNext();
+                }
+            };
+        }
     }
     
     function runNext(){
         const actionAndArgs = queue.shift();
         if(actionAndArgs !== undefined) {
-            actionAndArgs.action(currentState.current, ...actionAndArgs.args).then((state: any)=> {
-                currentState.current = state;
-                setState(state);
+            actionAndArgs.action(currentState.current, ...actionAndArgs.args).then((latestState: any)=> {
+                currentState.current = latestState;
+                setState(latestState);
                 runNext();
             });
         } else {
