@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "description": "A reducer to handle async actions",
   "main": "lib/index.js",
-   "types": "lib/index.d.ts",
+  "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest --config jestconfig.json",
     "build": "tsc",
@@ -20,7 +20,7 @@
   "devDependencies": {
     "@testing-library/react-hooks": "^5.1.2",
     "@types/jest": "^26.0.23",
-    "jest": "^26.6.3",
+    "jest": "26.6.0",
     "prettier": "^2.2.1",
     "react-test-renderer": "^17.0.2",
     "ts-jest": "^26.5.6",
