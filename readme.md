@@ -15,7 +15,7 @@ In your component, call `useAsyncReducerstate` with:
 
 
 ```js
-const [state, isProcessing, actions] = useAsyncReducerstate(
+const [state, isProcessing, actions] = useAsyncReducerState(
     // initial state
     {count: 0},
     // collection of reducer methods
@@ -27,7 +27,7 @@ const [state, isProcessing, actions] = useAsyncReducerstate(
             return { ...state, count: state.count - amountToSubtract };
         }
     }
-})
+ )
 ```
 
 `useAsyncReducerstate` returns:
@@ -47,7 +47,7 @@ return <div>
 
     <button onclick={()=> actions.subtract(1)}>One Step Back</button>
 
-    <p>Steps: {{state.count}}</p>
+    <p>Steps: {state.count}</p>
 </div>
 ```
 
