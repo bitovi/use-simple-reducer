@@ -7,7 +7,7 @@ designed to be used for managing service state data and result in easy-to-test r
 ## Use 
 
 
-In your component, call `useAsyncReducerstate` with:
+In your component, call `useAsyncReducerState` with:
 
 - The initial state you want to manage
 - A collection of reducer methods, each to be called with the `state` as the first argument and values 
@@ -30,7 +30,7 @@ const [state, isProcessing, actions] = useAsyncReducerState(
  )
 ```
 
-`useAsyncReducerstate` returns:
+`useAsyncReducerState` returns:
 
 - `state` - The latest state. This will initially return the initial state value, then it will return 
   the values returned by the reducer methods.
