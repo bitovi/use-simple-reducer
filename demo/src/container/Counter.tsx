@@ -1,8 +1,8 @@
-import { useAsyncReducerState } from '../asyncreducer/src/index'
+import { useAsyncReducerState } from '@bitovi/use-async-reducer-state'
 import Button from '../components/Button'
 import Loader from "react-loader-spinner";
 import { CounterState } from '../types'
-import { useEffect, useRef } from 'react';
+import {useRef } from 'react';
 import Modal from '../components/Modal'
 const styles: { [key: string]: React.CSSProperties } = {
     container: {
