@@ -84,7 +84,7 @@ The `error` could contain the following fields:
 | `actionAndArgs : ActionAndArgs` | Details of the error which includes the action's name, method and arguments. |
 | `rerunLastAction : (skipPendingActions: boolean = false) => void` | An error recovery method to rerun the last failed action. If skipPendingActions is set to true, the queue will be abandoned and the remaining actions in the queue will not be processed (default is false). |
 | `rerunLastActions : (numberOfActions: number, skipPendingActions: boolean = false, idempotentActions: boolean = false) => void` | Similar to redoLastAction but it takes numberOfActions as a parameter to specify the last N of actions to rerun. Setting idempotentActions to true will only rerun idempotent actions (default is false). |
-| `skipFailedAction : (skipPendingActions: boolean = false) => void` | This will skip the last failed action instead of reruning it. Setting skipPendingActions will abandon the rest of the queue. |
+| `skipFailedAction : (skipPendingActions: boolean = false) => void` | This will skip the last failed action instead of reruning it. Setting skipPendingActions to true will abandon the rest of the queue. |
 
 
 
