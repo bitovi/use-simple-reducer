@@ -87,5 +87,10 @@ The `error` could contain the following fields:
 | `skipFailedAction : (skipPendingActions: boolean = false) => void` | This will skip the last failed action instead of reruning it. Setting skipPendingActions to true will abandon the rest of the queue. |
 
 
+## Demonstration
+CodeSandBox:
+ > https://codesandbox.io/s/gallant-heisenberg-bwl9j
+
+
 
 
