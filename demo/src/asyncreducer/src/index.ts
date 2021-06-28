@@ -20,7 +20,7 @@ interface ActionAndArgs {
 interface Error {
     reason: any,
     actionAndArgs: ActionAndArgs,
-    redoLastAction: (skipPendingActions?: boolean) => void
+    rerunLastAction: (skipPendingActions?: boolean) => void
 }
 export function useAsyncReducerState
     <

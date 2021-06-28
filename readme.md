@@ -38,7 +38,7 @@ const [state, isProcessing, actions, error] = useAsyncReducerState(
   or other UI elements to the page.
 - `actions` - An object of methods that can be used to update the state.
 
-- `error` - An object of an error that is returned if any of the actions fail.
+- `error` - An error that is returned if any of the actions fail.
 
 When the user interacts with the page, call the `actions` methods. For example, 
 you might call `actions.add` and `actions.subtract` as follows:
@@ -55,7 +55,7 @@ return <div>
 
 ## Error Handling
 
-An error object gets returned if any of the reducer methods fails. A reason for the error, properties of the failed action and some error handling methods are exposed as part of the object.
+An error object gets returned if any of the reducer methods fails. The cause of the error, details of the failed action and some error handling methods are exposed as part of the object.
 ## Use
 
 ```js
@@ -67,23 +67,23 @@ An error object gets returned if any of the reducer methods fails. A reason for 
                 <p style={styles.text}>Steps: {state.count}</p>
                 <div style={styles.text}>{isProcessing ? <Loader /> : "Processing completed"}</div>
             </div>
-            {error && <AlertDialog content={error.reason} onConfirm={() => error.redoLastAction()} />}
+            {error && <AlertDialog content={error.reason} onConfirm={() => error.rerunLastAction()} />}
         </div>
     );
 }
 ```
 
-### Definition of a "Error"
+### Interface
 
   
 The `error` could contain the following fields:
 
 |  Field |  Purpose  |
 | --------- | -------------------------------------------------------------------- |
-| `reason : any` | A description of the error.|
-| `actionAndArgs : ActionAndArgs` | An object that contains the failed action's name, method and its arguments. |
-| `redoLastAction : (skipPendingActions: boolean = false) => void` | An error recovery method to rerun the last failed action, if skipPendingActions is set to true, the queue will be abandoned and the remaining actions in the queue will not be processed (default is false). |
-| `redoLastActions : (numberOfActions: number, skipPendingActions: boolean = false, idempotentActions: boolean = false) => void` | Similar to redoLastAction but it takes numberOfActions as a parameter to specify the last N of actions to rerun. Setting idempotentActions to true will only rerun idempotent actions (default is false). |
+| `reason : any` | The cause of the error. This can be of any type depending on the error thrown.|
+| `actionAndArgs : ActionAndArgs` | Details of the error which includes the action's name, method and arguments. |
+| `rerunLastAction : (skipPendingActions: boolean = false) => void` | An error recovery method to rerun the last failed action. If skipPendingActions is set to true, the queue will be abandoned and the remaining actions in the queue will not be processed (default is false). |
+| `rerunLastActions : (numberOfActions: number, skipPendingActions: boolean = false, idempotentActions: boolean = false) => void` | Similar to redoLastAction but it takes numberOfActions as a parameter to specify the last N of actions to rerun. Setting idempotentActions to true will only rerun idempotent actions (default is false). |
 | `skipFailedAction : (skipPendingActions: boolean = false) => void` | This will skip the last failed action instead of reruning it. Setting skipPendingActions will abandon the rest of the queue. |
 
 
