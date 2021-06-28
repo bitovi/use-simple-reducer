@@ -1,4 +1,4 @@
-import { useAsyncReducerState } from '@bitovi/use-async-reducer-state'
+import { useAsyncReducerState } from '../asyncreducer/src/index'
 import Button from '../components/Button'
 import Loader from "react-loader-spinner";
 import { CounterState } from '../types'
@@ -47,7 +47,7 @@ function Counter() {
     )
     return (
         <div>
-            {error ? <Modal message={error.message} action={error.redo} /> :
+            {error ? <Modal message={error.reason} action={error.redoLastAction} /> :
                 <div>
                     <Button type="Two Steps Forward" handleClick={() => actions.add(2)} />
                     <Button type="One Step Back" handleClick={() => actions.subtract(1)} />
