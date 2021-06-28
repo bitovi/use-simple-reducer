@@ -47,7 +47,7 @@ function Counter() {
     )
     return (
         <div>
-            {error ? <Modal message={error.reason} action={error.rerunLastAction} /> :
+            {error ? <Modal message={error.reason} action={error.rerunFailedAction} /> :
                 <div>
                     <Button type="Two Steps Forward" handleClick={() => actions.add(2)} />
                     <Button type="One Step Back" handleClick={() => actions.subtract(1)} />

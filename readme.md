@@ -1,6 +1,6 @@
 # use-async-reducer-state
 
-`useAsyncStateMethods` is a simple async state mechanism for ReactJS.  It's 
+`useAsyncReducerState` is a simple async state mechanism for ReactJS.  It's 
 designed to be used for managing service state data and result in easy-to-test reducer methods.
 
 
@@ -78,13 +78,13 @@ An error object gets returned if any of the reducer methods fails. The cause of 
   
 The `error` could contain the following fields:
 
-|  Field |  Purpose  |
-| --------- | -------------------------------------------------------------------- |
-| `reason : any` | The cause of the error. This can be of any type depending on the error thrown.|
-| `actionAndArgs : ActionAndArgs` | Details of the error which includes the action's name, method and arguments. |
-| `rerunLastAction : (skipPendingActions: boolean = false) => void` | An error recovery method to rerun the last failed action. If skipPendingActions is set to true, the queue will be abandoned and the remaining actions in the queue will not be processed (default is false). |
-| `rerunLastActions : (numberOfActions: number, skipPendingActions: boolean = false, idempotentActions: boolean = false) => void` | Similar to redoLastAction but it takes numberOfActions as a parameter to specify the last N of actions to rerun. Setting idempotentActions to true will only rerun idempotent actions (default is false). |
-| `skipFailedAction : (skipPendingActions: boolean = false) => void` | This will skip the last failed action instead of reruning it. Setting skipPendingActions to true will abandon the rest of the queue. |
+|  Field | Type |  Purpose  |
+| ------- | ---------------- | ------------------- |
+| `reason` | any | The cause of the error. This can be of any type depending on the error thrown.|
+| `failedActionAndArgs` | ActionAndArgs | Details of the failed action which include the action's name, method and arguments. |
+| `pendingActionsAndArgs` | ActionAndArgs[] | Details of the pending actions in the queue which include the actions' names, methods and arguments. |
+| `rerunFailedtAction` | (skipPendingActions?: boolean) => void | An error recovery method to re-run the last failed action. Setting `skipPendingActions` to true will abandon the rest of the queue and the remaining actions will not be processed `default = false`. |
+| `skipFailedAction` | (skipPendingActions?: boolean) => void | This will skip the last failed action instead of re-running it. Setting `skipPendingActions` to true will abandon the rest of the queue and the remaining actions will not be processed `default = false`. |
 
 
 ## Demonstration

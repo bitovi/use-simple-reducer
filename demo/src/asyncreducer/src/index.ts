@@ -20,7 +20,7 @@ interface ActionAndArgs {
 interface Error {
     reason: any,
     actionAndArgs: ActionAndArgs,
-    rerunLastAction: (skipPendingActions?: boolean) => void
+    rerunFailedAction: (skipPendingActions?: boolean) => void
 }
 export function useAsyncReducerState
     <
@@ -97,7 +97,7 @@ export function useAsyncReducerState
                 setError({
                     reason: err.message,
                     actionAndArgs,
-                    redoLastAction: (skipPendingActions: boolean = false) => runLast(actionAndArgs)
+                    rerunFailedAction: (skipPendingActions: boolean = false) => runLast(actionAndArgs)
                 })
                 isProccessing.current = false;
                 setProcessing(false);
