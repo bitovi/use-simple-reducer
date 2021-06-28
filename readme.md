@@ -15,7 +15,7 @@ In your component, call `useAsyncReducerState` with:
 
 
 ```js
-const [state, isProcessing, actions,] = useAsyncReducerState(
+const [state, isProcessing, actions, error] = useAsyncReducerState(
     // initial state
     {count: 0},
     // collection of reducer methods
@@ -55,7 +55,8 @@ return <div>
 
 ## Error Handling
 
-An error state gets returned if any of the called actions fails. A reason for the error, failed action related info and some recovery methods are exposed as part of the error object.
+An error object gets returned if any of the reducer methods fails. A reason for the error, properties of the failed action and some error handling methods are exposed as part of the object.
+## Use
 
 ```js
     return (
@@ -72,23 +73,19 @@ An error state gets returned if any of the called actions fails. A reason for th
 }
 ```
 
-## Interface
+### Definition of a "Error"
 
-The `error` object is composed of:
+  
+The `error` could contain the following fields:
 
-- `reason : any` 
-A description of the error.
+|  Field |  Purpose  |
+| --------- | -------------------------------------------------------------------- |
+| `reason : any` | A description of the error.|
+| `actionAndArgs : ActionAndArgs` | An object that contains the failed action's name, method and its arguments. |
+| `redoLastAction : (skipPendingActions: boolean = false) => void` | An error recovery method to rerun the last failed action, if skipPendingActions is set to true, the queue will be abandoned and the remaining actions in the queue will not be processed (default is false). |
+| `redoLastActions : (numberOfActions: number, skipPendingActions: boolean = false, idempotentActions: boolean = false) => void` | Similar to redoLastAction but it takes numberOfActions as a parameter to specify the last N of actions to rerun. Setting idempotentActions to true will only rerun idempotent actions (default is false). |
+| `skipFailedAction : (skipPendingActions: boolean = false) => void` | This will skip the last failed action instead of reruning it. Setting skipPendingActions will abandon the rest of the queue. |
 
-- `actionAndArgs : ActionAndArgs` 
-A set of values related to the failed action such as it's name, the action and its arguments.
 
-- `redoLastAction : (skipPendingActions: boolean = false) => void` 
-Recovery method to rerun the last failed action, if skipPendingActions is set to true, the queue will be abandoned and the remaining actions in the queue will not be processed (default is false).
-
-- `redoLastActions : (numberOfActions: number, skipPendingActions: boolean = false, idempotentActions: boolean = false) => void
-` 
-Similar to redoLastAction but takes numberOfActions as a parameter to specify the last N of actions to rerun. Setting idempotentActions to true will only rerun idempotent actions.
-- `skipFailedAction : (skipPendingActions: boolean = false) => void` 
-This will skip the last failed action instead of reruning it. Setting skipPendingActions will abandon the rest of the queue.
 
 
