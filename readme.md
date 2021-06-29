@@ -21,10 +21,13 @@ const [state, queue, actions, error] = useAsyncReducerState(
     // collection of reducer methods
     {
         async add(state, amountToAdd ){
-            return { ...state, count: state.count + amountToAdd };
+            return { ...state, count: state.count + amountToAdd + amount.offset };
         },
         async subtract(state, amountToSubtract ){
-            return { ...state, count: state.count - amountToSubtract };
+            // Performing a GET request to fetch an offset value to be subtracted from 'amountToSubract'
+            fetch("https://example.com/counter")
+            .then(response => response.json())
+            .then(amount => return { ...state, count: (state.count - amountToSubtract - amount.offset) })  
         }
     }
  )
