@@ -20,7 +20,7 @@ const [state, isProcessing, actions, error] = useAsyncReducerState(
     {count: 0},
     // collection of reducer methods
     {
-        async add(state, isIdemptonent, amountToAdd ){
+        async add(state, amountToAdd ){
             return { ...state, count: state.count + amountToAdd };
         },
         async subtract(state, amountToSubtract ){
@@ -32,24 +32,26 @@ const [state, isProcessing, actions, error] = useAsyncReducerState(
 
 `useAsyncReducerState` returns:
 
-- `state` - The latest state. This will initially return the initial state value, then it will return 
-  the values returned by the reducer methods.
-- `isProcessing` - `true` if an async action is running, `false` if otherwise.  This can be used to add loading, spinners
-  or other UI elements to the page.
-- `actions` - An object of methods that can be used to update the state.
-
-- `error` - An error that is returned if any of the actions fail.
+|  Field | Type |  Purpose  |
+| ------- | ---------------- | ------------------- |
+| `state` | { [key: string]: any }  | The latest state. This will initially return the initial state value, then it will return 
+  the values returned by the reducer methods. |
+| `isProcessing` | boolean | `true` if an async action is running, `false` if otherwise.  This can be used to add loading, spinners
+  or other UI elements to the page. |
+| `actions` | {[key: string]: (arg: any) => void} | An object of methods that can be used to update the state. |
+| `error` | Error | An error that is returned if any of the actions fail. |
 
 When the user interacts with the page, call the `actions` methods. For example, 
 you might call `actions.add` and `actions.subtract` as follows:
 
 ```jsx
 return <div>
-    <button onclick={()=> actions.add(2)}>Two Steps Forward</button>
-
-    <button onclick={()=> actions.subtract(1)}>One Step Back</button>
-
-    <p>Steps: {state.count}</p>
+    <button onClick={()=> actions.add(2)}>Two Steps Forward</button>
+    <button onClick={()=> actions.subtract(1)}>One Step Back</button>
+    <div>
+        <p>Steps: {state.count}</p>
+        <div>{isProcessing ? <Loader /> : "Processing completed"}</div>
+    </div>
 </div>
 ```
 
@@ -61,13 +63,13 @@ An error object gets returned if any of the reducer methods fails. The cause of 
 ```js
     return (
         <div>
-            <Button type="Two Steps Forward" handleClick={() => actions.add(2)} />
-            <Button type="One Step Back" handleClick={() => actions.subtract(1)} />
-            <div style={styles.container}>
-                <p style={styles.text}>Steps: {state.count}</p>
-                <div style={styles.text}>{isProcessing ? <Loader /> : "Processing completed"}</div>
+            <button onClick={()=> actions.add(2)}>Two Steps Forward</button>
+            <button onClick={()=> actions.subtract(1)}>One Step Back</button>
+            <div>
+                <p>Steps: {state.count}</p>
+                <div>{isProcessing ? <Loader /> : "Processing completed"}</div>
             </div>
-            {error && <AlertDialog content={error.reason} onConfirm={() => error.rerunLastAction()} />}
+            {error && <AlertDialog content={error.reason} onConfirm={() => error.rerunFailedAction()} />}
         </div>
     );
 }
