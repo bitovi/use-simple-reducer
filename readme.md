@@ -91,7 +91,7 @@ An error object gets returned if any of the reducer methods fails. The cause of 
                 <p>Steps: {state.count}</p>
                 <div>{queue.isProcessing ? <Loader /> : "Processing completed"}</div>
             </div>
-            {error && <AlertDialog content={error.reason} onConfirm={() => error.rerunFailedAction()} />}
+            {error && <AlertDialog content={error.reason} onConfirm={() => error.runFailedAction()} />}
         </div>
     );
 }
