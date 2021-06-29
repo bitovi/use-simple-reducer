@@ -111,6 +111,7 @@ The `error` could contain the following fields:
 | `runAllActions` | () => void | An error recovery method to re-run the failed action and all the pending actions in the queue. |
 
 Unless the user calls any of the error recovery methods listed above, a default behaviour of the queue is to clear the failed and pending actions in it once an error occurs. 
+
 These recovery methods are only available to use as long as no other intermediate actions has been performed. For example, If the user enqueues another action to the queue after one has failed and then tries to call one of the recovery methods it will fail.
 
 ## Demonstration
