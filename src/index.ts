@@ -10,6 +10,7 @@ interface BaseActions<RetType> {
 // Given a parameter type, makes a first argument with that type
 type FunctionForFirstParamType<ParamType> = (arg0: ParamType) => void
 
+// A user-defined type guard to check whether the initialState is a Promise
 function isInitialStatePromise(initialState: any): initialState is Promise<any> {
     return initialState && initialState.then && typeof initialState.then === 'function';
 }
