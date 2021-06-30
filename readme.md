@@ -15,22 +15,35 @@ In your component, call `useAsyncReducerState` with:
 
 
 ```js
-const [state, queue, actions, error] = useAsyncReducerState(
-    // initial state
-    {count: 0},
-    // collection of reducer methods
-    {
-        async add(state, amountToAdd ){
-            return { ...state, count: state.count + amountToAdd + amount.offset };
-        },
-        async subtract(state, amountToSubtract ){
-            // Performing a GET request to fetch an offset value to be subtracted from 'amountToSubract'
-            fetch("https://example.com/counter")
-            .then(response => response.json())
-            .then(amount => return { ...state, count: (state.count - amountToSubtract - amount.offset) })  
-        }
-    }
- )
+function Counter() {
+  const [state, queue, actions, error] = useAsyncReducerState(
+      // initial state
+      {count: 0},
+      // collection of reducer methods
+      {
+          async add(state, amountToAdd ){
+              return { ...state, count: state.count + amountToAdd + amount.offset };
+          },
+          async subtract(state, amountToSubtract ){
+              // Performing a GET request to fetch an offset value to be subtracted from 'amountToSubract'
+              fetch("https://example.com/counter")
+              .then(response => response.json())
+              .then(amount => return { ...state, count: (state.count - amountToSubtract - amount.offset) })  
+          }
+      }
+   )
+
+   return(
+   <div>
+      <button onClick={()=> actions.add(2)}>Two Steps Forward</button>
+      <button onClick={()=> actions.subtract(1)}>One Step Back</button>
+      <div>
+          <p>Steps: {state.count}</p>
+          <div>{isProcessing ? <Loader /> : "Processing completed"}</div>
+      </div>
+  </div>
+  )
+}
 ```
 
 `useAsyncReducerState` returns:
@@ -72,7 +85,7 @@ Any invoked reducer action gets added to a queue. The queue will then start proc
 |  Field | Type |  Purpose  |
 | ------- | ---------------- | ------------------- |
 | `isProcessing` | boolean | `true` if an async action is running, `false` if otherwise.  This can be used to add loading, spinners or other UI elements to the page.|
-| `processingActionAndArgs` | ActionAndArgs | Details of the in process action which include the action's name, method and arguments. |
+| `processingActionAndArgs` | ActionAndArgs | Details of the action currrently being processed which include the action's name, method and arguments. |
 | `pendingActionsAndArgs` | ActionAndArgs[] | An Array of details of the pending actions in the queue which include the actions' names, methods and arguments. |
 
 
