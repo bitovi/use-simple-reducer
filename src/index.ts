@@ -1,4 +1,4 @@
-import {useState as reactUseState, useRef} from "react";
+import {useState as reactUseState, useRef, useEffect} from "react";
 
 // Given an an object of functions and each function returns a promise, creates a combined type for all return values
 type FunctionPromiseReturnType<T> = T extends { [key: string]: (...args: any[]) => PromiseLike<infer RT> } ? RT: unknown;
@@ -9,6 +9,10 @@ interface BaseActions<RetType> {
 }
 // Given a parameter type, makes a first argument with that type
 type FunctionForFirstParamType<ParamType> = (arg0: ParamType) => void
+
+function isInitialStatePromise(initialState: any): initialState is Promise<any> {
+    return initialState && initialState.then && typeof initialState.then === 'function';
+}
 
 export function useAsyncReducerState
     <
@@ -26,7 +30,7 @@ export function useAsyncReducerState
 
     : [
         // Return state
-        FunctionPromiseReturnType<Actions> | InitialState, 
+        FunctionPromiseReturnType<Actions> | any, 
         // Processing 
         boolean,
         // Methods
@@ -42,8 +46,17 @@ export function useAsyncReducerState
             >}
     ]   
 {
-    
-    const [state, setState] = useState(initialState);
+    useEffect(() => {
+        if (isInitialStatePromise(initialState)){
+        initialState.then((response: any) => {
+                setState(response)
+                currentState.current = response
+            }
+
+        )}
+    }, [])
+
+    const [state, setState] = useState( isInitialStatePromise(initialState) ? null : initialState );
     const [processing, setProcessing] = useState(false);
 
     const isProccessing = useRef(false);
