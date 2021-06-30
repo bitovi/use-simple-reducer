@@ -55,6 +55,7 @@ export function useAsyncReducerState
             }
 
         )}
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const [state, setState] = useState( isInitialStatePromise(initialState) ? null : initialState );
