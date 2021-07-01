@@ -4,8 +4,27 @@
 designed to be used for managing service state data and result in easy-to-test reducer methods.
 
 
-## Use 
 
+## Table of Contents
+
+- [Install](#install)
+- [The Hook](#the-hook)
+- [The Queue](#the-queue)
+- [Error Handling](#error-handling)
+- [Demonstration](#demonstration)
+
+<a id="install"/>
+
+## Install
+```
+npm i @bitovi/use-async-reducer-state
+```
+
+<a id="the-hook"/>
+
+## The Hook
+
+#### Use 
 
 In your component, call `useAsyncReducerState` with:
 
@@ -49,9 +68,9 @@ function Counter() {
 `useAsyncReducerState` returns:
 
 |  Field | Type |  Purpose  |
-| ------- | ---------------- | ------------------- |
-| `state` | {[key: string]: any} | The latest state. This will initially return the initial state value, then it will return the values returned by the reducer methods.|
-| `queue` | {isProcessing: boolean, pendingActionsAndArgs: ActionAndArgs[], processingActionAndArgs : ActionAndArgs} | The state of the queue, whether it is still processing and the pending actions in the queue.|
+| ------- | --------------------------------- | --- |
+| `state` | {[key: string]: any} | The latest state. This will initially return the initial state value, then <br /> it will return the values returned by the reducer methods.|
+| `queue` | { isProcessing: boolean, <br /> pendingActionsAndArgs: ActionAndArgs[], <br /> processingActionAndArgs : ActionAndArgs} | The state of the queue, whether it is still processing and <br /> the pending actions in the queue.|
 | `actions` | {[key: string]: (arg: any) => void} | An object of methods that can be used to update the state.|
 | `error` | Error \| null | An error that is returned if any of the actions fail, `null` if otherwise.|
 
@@ -75,12 +94,13 @@ async add(state, amountToAdd ){
     return { ...state, count: state.count + amountToAdd };
 }
 ```
+<a id="the-queue"/>
 
 ## The Queue
 
 Any invoked reducer action gets added to a queue. The queue will then start processing those asynchrous actions in the same order they have been added. The `isProcessing` flag gets set to `false` once all actions has been processed.  
 
-### Interface
+#### Interface
 
 |  Field | Type |  Purpose  |
 | ------- | ---------------- | ------------------- |
@@ -88,12 +108,13 @@ Any invoked reducer action gets added to a queue. The queue will then start proc
 | `processingActionAndArgs` | ActionAndArgs | Details of the action currrently being processed which include the action's name, method and arguments. |
 | `pendingActionsAndArgs` | ActionAndArgs[] | An Array of details of the pending actions in the queue which include the actions' names, methods and arguments. |
 
+<a id="error-handling"/>
 
 ## Error Handling
 
 An error object gets returned if any of the reducer methods fails. The cause of the error, details of the failed action and some error handling methods are exposed as part of the object.
 
-## Use
+#### Use
 
 ```js
     return (
@@ -110,7 +131,7 @@ An error object gets returned if any of the reducer methods fails. The cause of 
 }
 ```
 
-### Interface
+#### Interface
   
 The `error` could contain the following fields:
 
@@ -125,7 +146,7 @@ The `error` could contain the following fields:
 
 Unless the user calls any of the error recovery methods listed above, a default behaviour of the queue is to clear the failed and pending actions in it once an error occurs. 
 
-These recovery methods are only available to use as long as no other intermediate actions has been performed. For example, If the user enqueues another action to the queue after one has failed and then tries to call one of the recovery methods it will fail.
+<a id="demonstration"/>
 
 ## Demonstration
 CodeSandBox:
