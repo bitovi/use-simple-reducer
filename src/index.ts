@@ -16,11 +16,20 @@ interface ActionAndArgs {
     action: (...args: any[]) => any,
     args: any[]
 }
+//The state of the queue, whether it is still processing and details of the running and pending actions in the queue
+interface Queue {
+    isProcessing: boolean,
+    runningActionAndArgs?: ActionAndArgs,
+    pendingActionsAndArgs?: ActionAndArgs[]
+}
 // An error object with a message string, an actionAndArgs object and a callback function
 interface Error {
-    message: string,
-    actionAndArgs: ActionAndArgs,
-    redo: () => void
+    reason: any,
+    failedActionAndArgs: ActionAndArgs,
+    pendingActionsAndArgs: ActionAndArgs[],
+    runFailedAction: () => void,
+    runPendingActions: () => void,
+    runAllActions: () => void
 }
 export function useAsyncReducerState
     <
@@ -40,7 +49,7 @@ export function useAsyncReducerState
         // Return state
         FunctionPromiseReturnType<Actions> | InitialState,
         // Processing 
-        boolean,
+        Queue,
         // Methods
         // Returns an object, for each key of the passed value ...
         { [PropertyType in keyof Actions]:
@@ -57,13 +66,10 @@ export function useAsyncReducerState
     ] {
 
     const [state, setState] = useState(initialState);
-    const [processing, setProcessing] = useState(false);
+    const [queue, setQueue] = useState<Queue>({isProcessing :false});
     const [error, setError] = useState<Error | null>(null)
-    const isProccessing = useRef(false);
-    const currentState = useRef<any>(state);
-
-
-    const { current: queue } = useRef<ActionAndArgs[]>([]);
+    const {current: currentQueue} = useRef<ActionAndArgs[]>([]);
+    let {current: currentState} = useRef<any>(state);
 
     const methods = {} as { [PropertyType in keyof Actions]: FunctionForFirstParamType<Parameters<Actions[PropertyType]>> };
 
@@ -71,14 +77,12 @@ export function useAsyncReducerState
     for (const actionName in actions) {
         if (Object.prototype.hasOwnProperty.call(actions, actionName)) {
             methods[actionName] = (...args: any[]) => {
-                queue.push({
+                currentQueue.push({
                     actionName,
                     action: actions[actionName],
                     args
                 });
-                if (!isProccessing.current) {
-                    isProccessing.current = true;
-                    setProcessing(true);
+                if (!queue.isProcessing) {
                     runNext();
                 }
             };
@@ -86,31 +90,38 @@ export function useAsyncReducerState
     }
 
     function runNext() {
-        const actionAndArgs = queue.shift();
+        setQueue({...queue, isProcessing: true});
+        const actionAndArgs = currentQueue.shift();
         if (actionAndArgs !== undefined) {
-            actionAndArgs.action(currentState.current, ...actionAndArgs.args).then((latestState: any) => {
-                currentState.current = latestState;
+            actionAndArgs.action(currentState, ...actionAndArgs.args).then((latestState: any) => {
+                currentState = latestState;
                 setError(null)
+                setQueue({...queue, runningActionAndArgs: actionAndArgs, pendingActionsAndArgs: [...currentQueue]});
                 setState(latestState);
                 runNext();
-            }).catch((err: Error) => {
+            }).catch((err: any) => {
+                const pendingActionsAndArgs = [...currentQueue]
+                currentQueue.splice(0, currentQueue.length)
+                setQueue({...queue, isProcessing: false});
                 setError({
-                    message: err.message,
-                    actionAndArgs,
-                    redo: () => runLast(actionAndArgs)
+                    reason: err,
+                    failedActionAndArgs: actionAndArgs,
+                    pendingActionsAndArgs: pendingActionsAndArgs,
+                    runFailedAction: () => runActions([actionAndArgs]),
+                    runPendingActions: () => runActions(pendingActionsAndArgs),
+                    runAllActions: () => runActions([actionAndArgs, ...pendingActionsAndArgs])
                 })
-                isProccessing.current = false;
-                setProcessing(false);
             }
             );
         } else {
-            isProccessing.current = false;
-            setProcessing(false);
+            setQueue({...queue, isProcessing: false});
         }
     }
-    function runLast(actionAndArgs: any) {
-        queue.unshift(actionAndArgs)
+    function runActions(actionsAndArgs: ActionAndArgs[]) {
+        for (const actionAndArgs of actionsAndArgs) {
+            currentQueue.push(actionAndArgs)
+        }
         runNext();
     }
-    return [state, processing, methods, error];
+    return [state, queue, methods, error];
 }

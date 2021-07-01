@@ -25,7 +25,7 @@ function Counter() {
         return new Promise((resolve) => { setTimeout(resolve, time) })
     }
     const amount = useRef(2);
-    const [state, isProcessing, actions, error] = useAsyncReducerState(
+    const [state, {isProcessing}, actions, error] = useAsyncReducerState(
         // initial state
         initialState,
         // collection of reducer methods
@@ -47,7 +47,7 @@ function Counter() {
     )
     return (
         <div>
-            {error ? <Modal message={error.reason} action={error.rerunFailedAction} /> :
+            {error ? <Modal message={error.reason.message} action={error.runFailedAction} /> :
                 <div>
                     <Button type="Two Steps Forward" handleClick={() => actions.add(2)} />
                     <Button type="One Step Back" handleClick={() => actions.subtract(1)} />
