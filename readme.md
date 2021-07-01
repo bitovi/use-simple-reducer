@@ -70,7 +70,7 @@ function Counter() {
 |  Field | Type |  Purpose  |
 | ------- | --------------------------------- | --- |
 | `state` | {[key: string]: any} | The latest state. This will initially return the initial state value, then <br /> it will return the values returned by the reducer methods.|
-| `queue` | { isProcessing: boolean, <br /> pendingActionsAndArgs: ActionAndArgs[], <br /> processingActionAndArgs : ActionAndArgs} | The state of the queue, whether it is still processing and <br /> the pending actions in the queue.|
+| `queue` | { isProcessing: boolean, <br /> pendingActionsAndArgs: ActionAndArgs[], <br /> runningActionAndArgs : ActionAndArgs} | The state of the queue, whether it is still processing and details of the running and pending actions in the queue.|
 | `actions` | {[key: string]: (arg: any) => void} | An object of methods that can be used to update the state.|
 | `error` | Error \| null | An error that is returned if any of the actions fail, `null` if otherwise.|
 
@@ -105,7 +105,7 @@ Any invoked reducer action gets added to a queue. The queue will then start proc
 |  Field | Type |  Purpose  |
 | ------- | ---------------- | ------------------- |
 | `isProcessing` | boolean | `true` if an async action is running, `false` if otherwise.  This can be used to add loading, spinners or other UI elements to the page.|
-| `processingActionAndArgs` | ActionAndArgs | Details of the action currrently being processed which include the action's name, method and arguments. |
+| `runningActionAndArgs` | ActionAndArgs | Details of the running action which include the action's name, method and arguments. |
 | `pendingActionsAndArgs` | ActionAndArgs[] | An Array of details of the pending actions in the queue which include the actions' names, methods and arguments. |
 
 <a id="error-handling"/>
