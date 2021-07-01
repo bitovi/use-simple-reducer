@@ -21,7 +21,7 @@ test('basics', async () => {
       })
     )
 
-  let [currentState, processing,{add, subtract}] = result.current;
+  let [currentState, {isProcessing},{add, subtract}] = result.current;
 
   expect(currentState.count).toBe(0);
 
@@ -30,7 +30,7 @@ test('basics', async () => {
 
   await waitForNextUpdate();
 
-  [currentState, processing,{subtract}] = result.current;
+  [currentState, {isProcessing},{subtract}] = result.current;
 
   expect(currentState.count).toBe(2);
 
@@ -38,7 +38,7 @@ test('basics', async () => {
 
   await waitForNextUpdate();
 
-  [currentState, processing,{add, subtract}] = result.current;
+  [currentState, {isProcessing},{add, subtract}] = result.current;
 
   expect(currentState.count).toBe(1);
 
@@ -54,7 +54,7 @@ test('queing', async ()=> {
     })
   )
 
-  let [currentState, processing,{add, subtract}] = result.current;
+  let [currentState, {isProcessing},{add, subtract}] = result.current;
 
   expect(currentState.count).toBe(0);
 
@@ -66,7 +66,7 @@ test('queing', async ()=> {
 
   await waitForNextUpdate();
 
-  [currentState, processing,{add, subtract}] = result.current;
+  [currentState, {isProcessing},{add, subtract}] = result.current;
 
   expect(currentState.count).toBe(1);
 
