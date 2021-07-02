@@ -69,7 +69,8 @@ export function useAsyncReducerState
     const [queue, setQueue] = useState<Queue>({isProcessing :false});
     const [error, setError] = useState<Error | null>(null)
     const {current: currentQueue} = useRef<ActionAndArgs[]>([]);
-    let {current: currentState} = useRef<any>(state);
+    const isProccessing = useRef(false);
+    const currentState = useRef<any>(state);
 
     const methods = {} as { [PropertyType in keyof Actions]: FunctionForFirstParamType<Parameters<Actions[PropertyType]>> };
 
@@ -82,7 +83,8 @@ export function useAsyncReducerState
                     action: actions[actionName],
                     args
                 });
-                if (!queue.isProcessing) {
+                if (!isProccessing.current) {
+                    isProccessing.current = true;
                     runNext();
                 }
             };
@@ -93,8 +95,8 @@ export function useAsyncReducerState
         setQueue({...queue, isProcessing: true});
         const actionAndArgs = currentQueue.shift();
         if (actionAndArgs !== undefined) {
-            actionAndArgs.action(currentState, ...actionAndArgs.args).then((latestState: any) => {
-                currentState = latestState;
+            actionAndArgs.action(currentState.current, ...actionAndArgs.args).then((latestState: any) => {
+                currentState.current = latestState;
                 setError(null)
                 setQueue({...queue, runningActionAndArgs: actionAndArgs, pendingActionsAndArgs: [...currentQueue]});
                 setState(latestState);
@@ -114,6 +116,7 @@ export function useAsyncReducerState
             }
             );
         } else {
+            isProccessing.current = false;
             setQueue({...queue, isProcessing: false});
         }
     }
