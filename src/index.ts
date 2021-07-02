@@ -16,17 +16,17 @@ interface ActionAndArgs {
     action: (...args: any[]) => any,
     args: any[]
 }
-//The state of the queue, whether it is still processing and details of the running and pending actions in the queue
+//The state of the queue, whether it is still active and details of the running and pending actions in the queue
 interface Queue {
-    isProcessing: boolean,
-    runningActionAndArgs?: ActionAndArgs,
-    pendingActionsAndArgs?: ActionAndArgs[]
+    isActive: boolean,
+    runningAction?: ActionAndArgs,
+    pendingActions?: ActionAndArgs[]
 }
 // An error object with a message string, an actionAndArgs object and a callback function
 interface Error {
     reason: any,
-    failedActionAndArgs: ActionAndArgs,
-    pendingActionsAndArgs: ActionAndArgs[],
+    failedAction: ActionAndArgs,
+    pendingActions: ActionAndArgs[],
     runFailedAction: () => void,
     runPendingActions: () => void,
     runAllActions: () => void
@@ -48,8 +48,6 @@ export function useSimpleReducer
     : [
         // Return state
         FunctionPromiseReturnType<Actions> | InitialState,
-        // Processing 
-        Queue,
         // Methods
         // Returns an object, for each key of the passed value ...
         { [PropertyType in keyof Actions]:
@@ -61,12 +59,14 @@ export function useSimpleReducer
                     Actions[PropertyType]
                 >[1]
             > },
+        // Queue 
+        Queue,
         // Error
         Error | null
     ] {
 
     const [state, setState] = useState(initialState);
-    const [queue, setQueue] = useState<Queue>({isProcessing :false});
+    const [queue, setQueue] = useState<Queue>({isActive :false});
     const [error, setError] = useState<Error | null>(null)
     const {current: currentQueue} = useRef<ActionAndArgs[]>([]);
     const isProccessing = useRef(false);
@@ -92,39 +92,37 @@ export function useSimpleReducer
     }
 
     function runNext() {
-        setQueue({...queue, isProcessing: true});
+        setQueue({...queue, isActive: true});
         const actionAndArgs = currentQueue.shift();
         if (actionAndArgs !== undefined) {
             actionAndArgs.action(currentState.current, ...actionAndArgs.args).then((latestState: any) => {
                 currentState.current = latestState;
                 setError(null)
-                setQueue({...queue, runningActionAndArgs: actionAndArgs, pendingActionsAndArgs: [...currentQueue]});
+                setQueue({...queue, runningAction: actionAndArgs, pendingActions: [...currentQueue]});
                 setState(latestState);
                 runNext();
             }).catch((err: any) => {
-                const pendingActionsAndArgs = [...currentQueue]
+                const pendingActions = [...currentQueue]
                 currentQueue.splice(0, currentQueue.length)
-                setQueue({...queue, isProcessing: false});
+                setQueue({...queue, isActive: false});
                 setError({
                     reason: err,
-                    failedActionAndArgs: actionAndArgs,
-                    pendingActionsAndArgs: pendingActionsAndArgs,
+                    failedAction: actionAndArgs,
+                    pendingActions: pendingActions,
                     runFailedAction: () => runActions([actionAndArgs]),
-                    runPendingActions: () => runActions(pendingActionsAndArgs),
-                    runAllActions: () => runActions([actionAndArgs, ...pendingActionsAndArgs])
+                    runPendingActions: () => runActions(pendingActions),
+                    runAllActions: () => runActions([actionAndArgs, ...pendingActions])
                 })
             }
             );
         } else {
             isProccessing.current = false;
-            setQueue({...queue, isProcessing: false});
+            setQueue({...queue, isActive: false});
         }
     }
     function runActions(actionsAndArgs: ActionAndArgs[]) {
-        for (const actionAndArgs of actionsAndArgs) {
-            currentQueue.push(actionAndArgs)
-        }
+        currentQueue.push(...actionsAndArgs)
         runNext();
     }
-    return [state, queue, methods, error];
+    return [state, methods, queue, error];
 }

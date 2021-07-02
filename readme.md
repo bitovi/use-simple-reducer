@@ -35,13 +35,13 @@ In your component, call `useSimpleReducer` with:
 
 ```js
 function Counter() {
-  const [state, queue, actions, error] = useSimpleReducer(
+  const [state, actions, queue, error] = useSimpleReducer(
       // initial state
       {count: 0},
       // collection of reducer methods
       {
           async add(state, amountToAdd ){
-              return { ...state, count: state.count + amountToAdd + amount.offset };
+              return { ...state, count: state.count + amountToAdd };
           },
           async subtract(state, amountToSubtract ){
               // Performing a GET request to fetch an offset value to be subtracted from 'amountToSubract'
@@ -58,7 +58,7 @@ function Counter() {
       <button onClick={()=> actions.subtract(1)}>One Step Back</button>
       <div>
           <p>Steps: {state.count}</p>
-          <div>{isProcessing ? <Loader /> : "Processing completed"}</div>
+          <div>{isActive ? <Loader /> : "Processing completed"}</div>
       </div>
   </div>
   )
@@ -70,7 +70,7 @@ function Counter() {
 |  Field | Type |  Purpose  |
 | ------- | --------------------------------- | --- |
 | `state` | {[key: string]: any} | The latest state. This will initially return the initial state value, then <br /> it will return the values returned by the reducer methods.|
-| `queue` | { isProcessing: boolean, <br /> pendingActionsAndArgs: ActionAndArgs[], <br /> runningActionAndArgs : ActionAndArgs} | The state of the queue, whether it is still processing and details of the running and pending actions in the queue.|
+| `queue` | { isActive: boolean, <br /> pendingAction: ActionAndArgs[], <br /> runningAction : ActionAndArgs} | The queue's state, whether it is still active and details of the </br> running and pending actions in the queue.|
 | `actions` | {[key: string]: (arg: any) => void} | An object of methods that can be used to update the state.|
 | `error` | Error \| null | An error that is returned if any of the actions fail, `null` if otherwise.|
 
@@ -84,7 +84,7 @@ return <div>
     <button onClick={()=> actions.subtract(1)}>One Step Back</button>
     <div>
         <p>Steps: {state.count}</p>
-        <div>{isProcessing ? <Loader /> : "Processing completed"}</div>
+        <div>{isActive ? <Loader /> : "Processing completed"}</div>
     </div>
 </div>
 ```
@@ -98,15 +98,15 @@ async add(state, amountToAdd ){
 
 ## The Queue
 
-Any invoked reducer action gets added to a queue. The queue will then start processing those asynchrous actions in the same order they have been added. The `isProcessing` flag gets set to `false` once all actions has been processed.  
+Any invoked reducer action gets added to a queue. The queue will then start processing those asynchrous actions in the same order they have been added. The `isActive` flag gets set to `false` once all actions has been processed.  
 
 #### Interface
 
 |  Field | Type |  Purpose  |
 | ------- | ---------------- | ------------------- |
-| `isProcessing` | boolean | `true` if an async action is running, `false` if otherwise.  This can be used to add loading, spinners or other UI elements to the page.|
-| `runningActionAndArgs` | ActionAndArgs | Details of the running action which include the action's name, method and arguments. |
-| `pendingActionsAndArgs` | ActionAndArgs[] | An Array of details of the pending actions in the queue which include the actions' names, methods and arguments. |
+| `isActive` | boolean | `true` if an async action is running, `false` if otherwise.  This can be used to add loading, spinners or other UI elements to the page.|
+| `runningAction` | ActionAndArgs | Details of the running action which include the action's name, method and arguments. |
+| `pendingActions` | ActionAndArgs[] | An Array of details of the pending actions in the queue which include the actions' names, methods and arguments. |
 
 <a id="error-handling"/>
 
@@ -123,7 +123,7 @@ An error object gets returned if any of the reducer methods fails. The cause of 
             <button onClick={()=> actions.subtract(1)}>One Step Back</button>
             <div>
                 <p>Steps: {state.count}</p>
-                <div>{queue.isProcessing ? <Loader /> : "Processing completed"}</div>
+                <div>{queue.isActive ? <Loader /> : "Processing completed"}</div>
             </div>
             {error && <AlertDialog content={error.reason} onConfirm={() => error.runFailedAction()} />}
         </div>
@@ -138,8 +138,8 @@ The `error` could contain the following fields:
 |  Field | Type |  Purpose  |
 | ------- | ---------------- | ------------------- |
 | `reason` | any | The cause of the error. This can be of any type depending on the error thrown.|
-| `failedActionAndArgs` | ActionAndArgs | Details of the failed action which include the action's name, method and arguments. |
-| `pendingActionsAndArgs` | ActionAndArgs[] | An array of the details of the pending actions in the queue which include the actions' names, methods and arguments. |
+| `failedAction` | ActionAndArgs | Details of the failed action which include the action's name, method and arguments. |
+| `pendingActions` | ActionAndArgs[] | An array of the details of the pending actions in the queue which include the actions' names, methods and arguments. |
 | `runFailedAction` | () => void | An error recovery method to re-run the last failed action. |
 | `runPendingActions` | () => void | An error recovery method to skip the failed action and only run the pending actions in the queue. |
 | `runAllActions` | () => void | An error recovery method to re-run the failed action and all the pending actions in the queue. |
