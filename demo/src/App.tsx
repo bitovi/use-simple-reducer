@@ -9,7 +9,7 @@ const styles: React.CSSProperties = {
 function App() {
   return (
     <div>
-      <h1 style={styles}>Use Async Reducer State Demo</h1>
+      <h1 style={styles}>Use Simple Reducer Demo</h1>
       <Counter />
     </div>
   );

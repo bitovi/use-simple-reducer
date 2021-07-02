@@ -1,1 +1,1 @@
-# A demo app for the use-async-reducer-state library
+# A demo app for the use-simple-reducer library

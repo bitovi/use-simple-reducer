@@ -1,6 +1,6 @@
-# use-async-reducer-state
+# use-simple-reducer
 
-`useAsyncReducerState` is a simple async state mechanism for ReactJS.  It's 
+`useSimpleReducer` is a simple async state mechanism for ReactJS.  It's 
 designed to be used for managing service state data and result in easy-to-test reducer methods.
 
 
@@ -17,7 +17,7 @@ designed to be used for managing service state data and result in easy-to-test r
 
 ## Install
 ```
-npm i @bitovi/use-async-reducer-state
+npm i @bitovi/use-simple-reducer
 ```
 
 <a id="the-hook"/>
@@ -26,7 +26,7 @@ npm i @bitovi/use-async-reducer-state
 
 #### Use 
 
-In your component, call `useAsyncReducerState` with:
+In your component, call `useSimpleReducer` with:
 
 - The initial state you want to manage
 - A collection of reducer methods, each to be called with the `state` as the first argument and values 
@@ -35,7 +35,7 @@ In your component, call `useAsyncReducerState` with:
 
 ```js
 function Counter() {
-  const [state, queue, actions, error] = useAsyncReducerState(
+  const [state, queue, actions, error] = useSimpleReducer(
       // initial state
       {count: 0},
       // collection of reducer methods
@@ -65,7 +65,7 @@ function Counter() {
 }
 ```
 
-`useAsyncReducerState` returns:
+`useSimpleReducer` returns:
 
 |  Field | Type |  Purpose  |
 | ------- | --------------------------------- | --- |

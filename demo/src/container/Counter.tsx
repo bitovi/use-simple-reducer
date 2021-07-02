@@ -1,4 +1,4 @@
-import { useAsyncReducerState } from '@bitovi/use-async-reducer-state'
+import { useSimpleReducer } from '@bitovi/use-simple-reducer'
 import Button from '../components/Button'
 import Loader from "react-loader-spinner";
 import { CounterState } from '../types'
@@ -25,7 +25,7 @@ function Counter() {
         return new Promise((resolve) => { setTimeout(resolve, time) })
     }
     const amount = useRef(2);
-    const [state, {isProcessing}, actions, error] = useAsyncReducerState(
+    const [state, {isProcessing}, actions, error] = useSimpleReducer(
         // initial state
         initialState,
         // collection of reducer methods

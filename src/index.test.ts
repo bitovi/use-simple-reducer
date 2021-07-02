@@ -1,4 +1,4 @@
-import { useAsyncReducerState } from './index';
+import { useSimpleReducer } from './index';
 import { renderHook, act } from '@testing-library/react-hooks'
 
 
@@ -15,7 +15,7 @@ async function subtractFromState(state: {count: number}, num: number) {
 test('basics', async () => {
 
   const {result, waitForNextUpdate}  = renderHook(
-      () => useAsyncReducerState({count: 0},{
+      () => useSimpleReducer({count: 0},{
         add: addToState,
         subtract: subtractFromState
       })
@@ -48,7 +48,7 @@ test('basics', async () => {
 test('queing', async ()=> {
 
   const {result, waitForNextUpdate}  = renderHook(
-    () => useAsyncReducerState({count: 0},{
+    () => useSimpleReducer({count: 0},{
       add: addToState,
       subtract: subtractFromState
     })

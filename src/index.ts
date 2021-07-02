@@ -31,7 +31,7 @@ interface Error {
     runPendingActions: () => void,
     runAllActions: () => void
 }
-export function useAsyncReducerState
+export function useSimpleReducer
     <
         // State of the initial state
         InitialState,
