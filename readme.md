@@ -31,7 +31,7 @@ In your component, call `useSimpleReducer` with:
 |  Field | Type |  Purpose  |
 | ------- | ---------------- | ------------------- |
 | `initialState` | any | The initial state you want to manage.|
-| `actions` | {[key: string]: </br> (state: any, payload: any) => any} | A collection of reducer methods, each to be called with the `state` as the first argument and values passed to the `action` method as the second argument. If you are unfamiliar with the reducer pattern you can check out the [redux reducer](https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers). |
+| `actions` | {[key: string]: </br> (state: any, payload: any) => any} | A collection of reducer methods, each to be called with </br> the`state` as the first argument and values passed to </br> the `action` method as the second argument. If you are </br> unfamiliar with the reducer pattern you can check out </br> the [redux reducer](https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers). |
 
 ```js
 function Counter() {
@@ -69,10 +69,10 @@ function Counter() {
 
 |  Field | Type |  Purpose  |
 | ------- | ------- | ------- |
-| `state` | {[key: string]: any} | The latest state. This will initially return the initial state value, then it will return the values returned by the reducer methods.|
-| `queue` | { isActive: boolean, </br> pendingAction: ActionAndArgs[], </br> runningAction : ActionAndArgs} | The queue's state, whether it is still active and details of the running and pending actions in the queue.|
+| `state` | {[key: string]: any} | The latest state. This will initially return the initial state value, </br> then it will return the values returned by the reducer methods.|
+| `queue` | { isActive: boolean, </br> pendingAction: ActionAndArgs[], </br> runningAction : ActionAndArgs} | The queue's state, whether it is still active and details of </br> the running and pending actions in the queue.|
 | `actions` | {[key: string]: (arg: any) => void} | An object of methods that can be used to update the state.|
-| `error` | Error \| null | An error that is returned if any of the actions fail, `null` if otherwise.|
+| `error` | Error \| null | An error that is returned if any of the actions fail, `null` </br> if otherwise.|
 
 
 When the user interacts with the page, call the `actions` methods. For example, 
