@@ -1,4 +1,4 @@
-import { useSimpleReducer } from '@bitovi/use-simple-reducer'
+import { useSimpleReducer } from '../asyncReducer/index'
 import Button from '../components/Button'
 import Loader from "react-loader-spinner";
 import { CounterState } from '../types'
@@ -25,7 +25,7 @@ function Counter() {
         return new Promise((resolve) => { setTimeout(resolve, time) })
     }
     const amount = useRef(2);
-    const [state, {isProcessing}, actions, error] = useSimpleReducer(
+    const [state, actions, queue, error]= useSimpleReducer(
         // initial state
         initialState,
         // collection of reducer methods
@@ -53,7 +53,7 @@ function Counter() {
                     <Button type="One Step Back" handleClick={() => actions.subtract(1)} />
                     <div style={styles.container}>
                         <p style={styles.text}>Steps: {state.count}</p>
-                        <div style={styles.text}>{isProcessing ? <Loader
+                        <div style={styles.text}>{queue.isActive ? <Loader
                             type="Puff"
                             color="#00BFFF"
                             height={100}
