@@ -28,10 +28,10 @@ npm i @bitovi/use-simple-reducer
 
 In your component, call `useSimpleReducer` with:
 
-- The initial state you want to manage
-- A collection of reducer methods, each to be called with the `state` as the first argument and values 
-  passed to the `action` method as the second argument. If you are unfamiliar with the reducer pattern you can check out the redux [reducer](https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers).
-
+|  Field | Type |  Purpose  |
+| ------- | ---------------- | ------------------- |
+| `initialState` | any | The initial state you want to manage.|
+| `actions` | {[key: string]: </br> (state: any, payload: any) => any} | A collection of reducer methods, each to be called with the `state` </br> as the first argument and values passed to the `action` method as </br> the second argument. If you are unfamiliar with the reducer pattern </br> you can check out the [redux reducer](https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers). |
 
 ```js
 function Counter() {
@@ -68,7 +68,7 @@ function Counter() {
 `useSimpleReducer` returns:
 
 |  Field | Type |  Purpose  |
-| ------- | --------------------------------- | --- |
+| ------- | ------- | ------- |
 | `state` | {[key: string]: any} | The latest state. This will initially return the initial state value, then <br /> it will return the values returned by the reducer methods.|
 | `queue` | { isActive: boolean, <br /> pendingAction: ActionAndArgs[], <br /> runningAction : ActionAndArgs} | The queue's state, whether it is still active and details of the </br> running and pending actions in the queue.|
 | `actions` | {[key: string]: (arg: any) => void} | An object of methods that can be used to update the state.|
@@ -88,7 +88,7 @@ return <div>
     </div>
 </div>
 ```
-The argument being passed to `actions` methods. For example, `actions.add(2)` should match the type of the 2nd argument of the reducer method         
+The argument being passed to `actions` methods here `actions.add(2)` should match the type of the payload argument `amountToAdd` being passed to the reducer method `async add (state, amountToAdd)` 
 ```js
 async add(state, amountToAdd ){
     return { ...state, count: state.count + amountToAdd };
