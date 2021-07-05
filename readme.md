@@ -31,7 +31,7 @@ In your component, call `useSimpleReducer` with:
 |  Field | Type |  Purpose  |
 | ------- | ---------------- | ------------------- |
 | `initialState` | any | The initial state you want to manage.|
-| `actions` | {[key: string]: </br> (state: any, payload: any) => any} | A collection of reducer methods, each to be called with the `state` </br> as the first argument and values passed to the `action` method as </br> the second argument. If you are unfamiliar with the reducer pattern </br> you can check out the [redux reducer](https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers). |
+| `actions` | {[key: string]: </br> (state: any, payload: any) => any} | A collection of reducer methods, each to be called with the </br> `state` as the first argument and values passed to the `action` </br> method as the second argument. If you are unfamiliar with </br> the reducer pattern you can check out the [redux reducer](https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers). |
 
 ```js
 function Counter() {
