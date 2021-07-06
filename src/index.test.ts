@@ -17,18 +17,19 @@ async function errorAction(state: { count: number }, num: number) {
     throw new Error("This action has failed being executed");
   return { count: 0 };
 }
-async function addToStateWithWait(state: { count: number }, num: number) {
-  await new Promise((r) => setTimeout(r, 1000))
-  return { count: state.count + num };
-}
-test('basics', async () => {
-
-  const { result, waitForNextUpdate } = renderHook(
+let result: any
+let waitForNextUpdate: any
+beforeEach(() => {
+ ({ result, waitForNextUpdate}  = renderHook(
     () => useSimpleReducer({ count: 0 }, {
       add: addToState,
-      subtract: subtractFromState
+      subtract: subtractFromState,
+      fail: errorAction
     })
   )
+)})
+
+test('basics', async () => {
 
   let [currentState, { add, subtract }] = result.current;
 
@@ -56,12 +57,6 @@ test('basics', async () => {
 
 describe('queing', () => {
   test('queuing actions', async () => {
-    const { result, waitForNextUpdate } = renderHook(
-      () => useSimpleReducer({ count: 0 }, {
-        add: addToState,
-        subtract: subtractFromState
-      })
-    )
 
     let [currentState, { add, subtract }] = result.current;
 
@@ -81,14 +76,6 @@ describe('queing', () => {
 
   })
   test('activity status', async () => {
-    const { result, waitForNextUpdate } = renderHook(
-      () => useSimpleReducer({ count: 0 }, {
-        add: addToState,
-        subtract: subtractFromState,
-        addWithWait: addToStateWithWait
-      })
-    )
-
     let [currentState, { add, subtract }, queue] = result.current;
 
     expect(currentState.count).toBe(0);
@@ -107,20 +94,11 @@ describe('queing', () => {
     expect(queue.isActive).toBeFalsy();
 
   })
-  test('running and pending actions', async () => {
-  })
 });
 
 describe('error handling', () => {
   test('error reason and queue status', async () => {
 
-    const { result, waitForNextUpdate } = renderHook(
-      () => useSimpleReducer({ count: 0 }, {
-        add: addToState,
-        subtract: subtractFromState,
-        fail: errorAction
-      })
-    )
     let [currentState, { add, subtract, fail }, queue, error] = result.current;
 
     expect(currentState.count).toBe(0);
@@ -155,13 +133,6 @@ describe('error handling', () => {
   });
   test('running the failed action after an error', async () => {
 
-    const { result, waitForNextUpdate } = renderHook(
-      () => useSimpleReducer({ count: 0 }, {
-        add: addToState,
-        subtract: subtractFromState,
-        fail: errorAction
-      })
-    )
     shouldThrowError = true
 
     let [currentState, { add, subtract, fail }, queue, error] = result.current;
@@ -193,13 +164,6 @@ describe('error handling', () => {
   });
   test('running pending actions after an error', async () => {
 
-    const { result, waitForNextUpdate } = renderHook(
-      () => useSimpleReducer({ count: 0 }, {
-        add: addToState,
-        subtract: subtractFromState,
-        fail: errorAction
-      })
-    )
     let [currentState, { add, subtract, fail }, queue, error] = result.current;
 
     expect(currentState.count).toBe(0);
@@ -229,13 +193,6 @@ describe('error handling', () => {
   });
   test('running all actions after an error', async () => {
 
-    const { result, waitForNextUpdate } = renderHook(
-      () => useSimpleReducer({ count: 0 }, {
-        add: addToState,
-        subtract: subtractFromState,
-        fail: errorAction
-      })
-    )
     shouldThrowError = true
 
     let [currentState, { add, subtract, fail }, queue, error] = result.current;
@@ -265,15 +222,8 @@ describe('error handling', () => {
       expect(error).toBeNull()
     }
   });
-  test('not running any recovery method after an error', async () => {
+  test('not running any recovery methods after an error', async () => {
 
-    const { result, waitForNextUpdate } = renderHook(
-      () => useSimpleReducer({ count: 0 }, {
-        add: addToState,
-        subtract: subtractFromState,
-        fail: errorAction
-      })
-    )
     shouldThrowError = true
 
     let [currentState, { add, subtract, fail }, queue, error] = result.current;
@@ -300,13 +250,6 @@ describe('error handling', () => {
   });
   test('running a recovery method after the users invokes an action', async () => {
 
-    const { result, waitForNextUpdate } = renderHook(
-      () => useSimpleReducer({ count: 0 }, {
-        add: addToState,
-        subtract: subtractFromState,
-        fail: errorAction
-      })
-    )
     shouldThrowError = true
 
     let [currentState, { add, subtract, fail }, queue, error] = result.current;
@@ -331,7 +274,7 @@ describe('error handling', () => {
         add(2);
       });
       await waitForNextUpdate();
-      [currentState, queue, error] = result.current;
+      [currentState, {}, queue, error] = result.current;
       expect(error).toBeNull()
     }
   });
