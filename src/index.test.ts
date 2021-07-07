@@ -280,9 +280,3 @@ describe('error handling', () => {
   });
 })
 
-
-// error being returned for an action that failed, consists of cause of error and details of the failed and pending actions
-// run failed action for a failed error, runs only the failed action
-// run pending actions for a failed error, skips failed action and runs only pending actions
-// run all actions for a failed error, runs failed and pending actions
-// not running any recovery method, queue is cleared up
