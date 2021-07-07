@@ -1,9 +1,7 @@
 # use-simple-reducer
 
-`useSimpleReducer` is a simple async state mechanism for ReactJS.  It's 
+`useSimpleReducer` is a simple async state mechanism for ReactJS. It's
 designed to be used for managing service state data and result in easy-to-test reducer methods.
-
-
 
 ## Table of Contents
 
@@ -16,6 +14,7 @@ designed to be used for managing service state data and result in easy-to-test r
 <a id="install"/>
 
 ## Install
+
 ```
 npm i @bitovi/use-simple-reducer
 ```
@@ -24,14 +23,14 @@ npm i @bitovi/use-simple-reducer
 
 ## The Hook
 
-#### Use 
+#### Use
 
 In your component, call `useSimpleReducer` with:
 
-|  Field | Type |  Purpose  |
-| ------- | ---------------- | ------------------- |
-| `initialState` | any | The initial state you want to manage.|
-| `actions` | {[key: string]: </br> (state: any, payload: any) => any} | A collection of reducer methods, each to be called with </br> the`state` as the first argument and values passed to </br> the `action` method as the second argument. If you are </br> unfamiliar with the reducer pattern you can check out </br> the [redux reducer](https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers). |
+| Field          | Type                                                     | Purpose                                                                                                                                                                                                                                                                                                                                            |
+| -------------- | -------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `initialState` | any                                                      | The initial state you want to manage.                                                                                                                                                                                                                                                                                                              |
+| `actions`      | {[key: string]: </br> (state: any, payload: any) => any} | A collection of reducer methods, each to be called with </br> the`state` as the first argument and values passed to </br> the `action` method as the second argument. If you are </br> unfamiliar with the reducer pattern you can check out </br> the [redux reducer](https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers). |
 
 ```js
 function Counter() {
@@ -45,9 +44,9 @@ function Counter() {
           },
           async subtract(state, amountToSubtract ){
               // Performing a GET request to fetch an offset value to be subtracted from 'amountToSubract'
-              fetch("https://example.com/counter")
+              fetch("https://counter.com/offset")
               .then(response => response.json())
-              .then(amount => return { ...state, count: (state.count - amountToSubtract - amount.offset) })  
+              .then(amount => return { ...state, count: (state.count - amountToSubtract - amount.offset) })
           }
       }
    )
@@ -67,46 +66,50 @@ function Counter() {
 
 `useSimpleReducer` returns:
 
-|  Field | Type |  Purpose  |
-| ------- | ------- | ------- |
-| `state` | {[key: string]: any} | The latest state. This will initially return the initial state value, </br> then it will return the values returned by the reducer methods.|
-| `queue` | { isActive: boolean, </br> pendingAction: ActionAndArgs[], </br> runningAction : ActionAndArgs} | The queue's state, whether it is still active and details of </br> the running and pending actions in the queue.|
-| `actions` | {[key: string]: (arg: any) => void} | An object of methods that can be used to update the state.|
-| `error` | Error \| null | An error that is returned if any of the actions fail, `null` </br> if otherwise.|
+| Field     | Type                                                                                            | Purpose                                                                                                                                     |
+| --------- | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| `state`   | {[key: string]: any}                                                                            | The latest state. This will initially return the initial state value, </br> then it will return the values returned by the reducer methods. |
+| `queue`   | { isActive: boolean, </br> pendingAction: ActionAndArgs[], </br> runningAction : ActionAndArgs} | The queue's state, whether it is still active and details of </br> the running and pending actions in the queue.                            |
+| `actions` | {[key: string]: (arg: any) => void}                                                             | An object of methods that can be used to update the state.                                                                                  |
+| `error`   | Error \| null                                                                                   | An error that is returned if any of the actions fail, `null` </br> if otherwise.                                                            |
 
-
-When the user interacts with the page, call the `actions` methods. For example, 
+When the user interacts with the page, call the `actions` methods. For example,
 you might call `actions.add` and `actions.subtract` as follows:
 
 ```jsx
-return <div>
-    <button onClick={()=> actions.add(2)}>Two Steps Forward</button>
-    <button onClick={()=> actions.subtract(1)}>One Step Back</button>
+return (
+  <div>
+    <button onClick={() => actions.add(2)}>Two Steps Forward</button>
+    <button onClick={() => actions.subtract(1)}>One Step Back</button>
     <div>
-        <p>Steps: {state.count}</p>
-        <div>{isActive ? <Loader /> : "Processing completed"}</div>
+      <p>Steps: {state.count}</p>
+      <div>{isActive ? <Loader /> : 'Processing completed'}</div>
     </div>
-</div>
+  </div>
+);
 ```
-The argument being passed to `actions` methods here `actions.add(2)` should match the type of the payload argument `amountToAdd` being passed to the reducer method `async add (state, amountToAdd)` 
+
+The argument being passed to `actions` methods here `actions.add(2)` should match the type of the payload argument `amountToAdd` being passed to the reducer method `async add (state, amountToAdd)`
+
 ```js
 async add(state, amountToAdd ){
     return { ...state, count: state.count + amountToAdd };
 }
 ```
+
 <a id="the-queue"/>
 
 ## The Queue
 
-Any invoked reducer action gets added to a queue. The queue will then start processing those asynchrous actions in the same order they have been added. The `isActive` flag gets set to `false` once all actions has been processed.  
+Any invoked reducer action gets added to a queue. The queue will then start processing those asynchrous actions in the same order they have been added. The `isActive` flag gets set to `false` once all actions has been processed.
 
 #### Interface
 
-|  Field | Type |  Purpose  |
-| ------- | ---------------- | ------------------- |
-| `isActive` | boolean | `true` if an async action is running, `false` if otherwise.  This can be used to add loading, spinners or other UI elements to the page.|
-| `runningAction` | ActionAndArgs | Details of the running action which include the action's name, method and arguments. |
-| `pendingActions` | ActionAndArgs[] | An Array of details of the pending actions in the queue which include the actions' names, methods and arguments. |
+| Field            | Type            | Purpose                                                                                                                                 |
+| ---------------- | --------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `isActive`       | boolean         | `true` if an async action is running, `false` if otherwise. This can be used to add loading, spinners or other UI elements to the page. |
+| `runningAction`  | ActionAndArgs   | Details of the running action which include the action's name, method and arguments.                                                    |
+| `pendingActions` | ActionAndArgs[] | An Array of details of the pending actions in the queue which include the actions' names, methods and arguments.                        |
 
 <a id="error-handling"/>
 
@@ -132,22 +135,24 @@ An error object gets returned if any of the reducer methods fails. The cause of 
 ```
 
 #### Interface
-  
+
 The `error` could contain the following fields:
 
-|  Field | Type |  Purpose  |
-| ------- | ---------------- | ------------------- |
-| `reason` | any | The cause of the error. This can be of any type depending on the error thrown.|
-| `failedAction` | ActionAndArgs | Details of the failed action which include the action's name, method and arguments. |
-| `pendingActions` | ActionAndArgs[] | An array of the details of the pending actions in the queue which include the actions' names, methods and arguments. |
-| `runFailedAction` | () => void | An error recovery method to re-run the last failed action. |
-| `runPendingActions` | () => void | An error recovery method to skip the failed action and only run the pending actions in the queue. |
-| `runAllActions` | () => void | An error recovery method to re-run the failed action and all the pending actions in the queue. |
+| Field               | Type            | Purpose                                                                                                              |
+| ------------------- | --------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `reason`            | any             | The cause of the error. This can be of any type depending on the error thrown.                                       |
+| `failedAction`      | ActionAndArgs   | Details of the failed action which include the action's name, method and arguments.                                  |
+| `pendingActions`    | ActionAndArgs[] | An array of the details of the pending actions in the queue which include the actions' names, methods and arguments. |
+| `runFailedAction`   | () => void      | An error recovery method to re-run the last failed action.                                                           |
+| `runPendingActions` | () => void      | An error recovery method to skip the failed action and only run the pending actions in the queue.                    |
+| `runAllActions`     | () => void      | An error recovery method to re-run the failed action and all the pending actions in the queue.                       |
 
-Unless the user calls any of the error recovery methods listed above, a default behaviour of the queue is to clear the failed and pending actions in it once an error occurs. 
+Unless the user calls any of the error recovery methods listed above, a default behaviour of the queue is to clear the failed and pending actions in it once an error occurs.
 
 <a id="demonstration"/>
 
 ## Demonstration
+
 CodeSandBox:
- > https://codesandbox.io/s/gifted-elbakyan-g31c3
+
+> https://codesandbox.io/s/gifted-elbakyan-g31c3

@@ -18,7 +18,7 @@ interface ActionAndArgs {
   action: (...args: any[]) => any;
   args: any[];
 }
-//The state of the queue, whether it is still active and details of the running and pending actions in the queue
+// The state of the queue, whether it is still active and details of the running and pending actions in the queue
 interface Queue {
   isActive: boolean;
   runningAction: Nullable<ActionAndArgs>;
@@ -48,7 +48,8 @@ export function useSimpleReducer<
   // Methods
   // Returns an object, for each key of the passed value ...
   {
-    [PropertyType in keyof Actions]: FunctionForFirstParamType< // Returns a function whose first argument is
+    [PropertyType in keyof Actions]: FunctionForFirstParamType<
+      // Returns a function whose first argument is
       // The first parameter type
       Parameters<
         // For the specific function for an action
@@ -109,7 +110,7 @@ export function useSimpleReducer<
           setError({
             reason: err,
             failedAction: actionAndArgs,
-            pendingActions: pendingActions,
+            pendingActions,
             runFailedAction: () => runActions([actionAndArgs]),
             runPendingActions: () => runActions(pendingActions),
             runAllActions: () => runActions([actionAndArgs, ...pendingActions]),
