@@ -1,11 +1,11 @@
-import {useState as reactUseState, useRef, useEffect} from "react";
+import { useState as reactUseState, useRef, useEffect } from "react";
 
 // Given an an object of functions and each function returns a promise, creates a combined type for all return values
-type FunctionPromiseReturnType<T> = T extends { [key: string]: (...args: any[]) => PromiseLike<infer RT> } ? RT: unknown;
+type FunctionPromiseReturnType<T> = T extends { [key: string]: (...args: any[]) => PromiseLike<infer RT> } ? RT : unknown;
 
 // An object of functions of unlimited arguments that return a parameterized type
 interface BaseActions<RetType> {
-    [key: string]:  (...args: any[]) => RetType
+    [key: string]: (...args: any[]) => RetType
 }
 // Given a parameter type, makes a first argument with that type
 type FunctionForFirstParamType<ParamType> = (arg0: ParamType) => void
@@ -20,43 +20,43 @@ export function useAsyncReducerState
     <
         // State of the initial state
         InitialState,
-         // Actions is an object of functions where each value is a function
+        // Actions is an object of functions where each value is a function
         Actions extends BaseActions<any>
     >
-    
+
     (
-        initialState: InitialState, 
-        actions : Actions,
+        initialState: InitialState,
+        actions: Actions,
         useState = reactUseState
-    ) 
+    )
 
     : [
         // Return state
-        FunctionPromiseReturnType<Actions>  | FunctionForInitialStateType<InitialState> | null, 
+        FunctionPromiseReturnType<Actions> | FunctionForInitialStateType<InitialState> | null,
         // Processing 
         boolean,
         // Methods
         // Returns an object, for each key of the passed value ...
-        {[PropertyType in keyof Actions]: 
+        { [PropertyType in keyof Actions]:
             // Returns a function whose first argument is 
-            FunctionForFirstParamType< 
+            FunctionForFirstParamType<
                 // The first parameter type
                 Parameters<
                     // For the specific function for an action
                     Actions[PropertyType]
-                >[1] 
-            >}
-    ]   
-{
+                >[1]
+            > }
+    ] {
     useEffect(() => {
-        if (isInitialStatePromise(initialState)){
-        initialState.then((response: any) => {
+        if (isInitialStatePromise(initialState)) {
+            initialState.then((response: any) => {
                 setState(response)
                 currentState.current = response
             }
 
-        )}
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+            )
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const [state, setState] = useState(isInitialStatePromise(initialState) ? null : initialState as FunctionForInitialStateType<InitialState>);
@@ -66,20 +66,20 @@ export function useAsyncReducerState
     const currentState = useRef<any>(state);
 
 
-    const {current: queue} = useRef<any[]>([]);
+    const { current: queue } = useRef<any[]>([]);
 
-    const methods = {} as {[PropertyType in keyof Actions]: FunctionForFirstParamType<Parameters<Actions[PropertyType]>>};
+    const methods = {} as { [PropertyType in keyof Actions]: FunctionForFirstParamType<Parameters<Actions[PropertyType]>> };
 
     // implementation
-    for(const actionName in actions) {
-        if(Object.prototype.hasOwnProperty.call(actions, actionName)) {
-            methods[actionName] = (...args: any[])=> {
+    for (const actionName in actions) {
+        if (Object.prototype.hasOwnProperty.call(actions, actionName)) {
+            methods[actionName] = (...args: any[]) => {
                 queue.push({
                     actionName,
                     action: actions[actionName],
                     args
                 });
-                if(!isProccessing.current) {
+                if (!isProccessing.current) {
                     isProccessing.current = true;
                     setProcessing(true);
                     runNext();
@@ -87,11 +87,11 @@ export function useAsyncReducerState
             };
         }
     }
-    
-    function runNext(){
+
+    function runNext() {
         const actionAndArgs = queue.shift();
-        if(actionAndArgs !== undefined) {
-            actionAndArgs.action(currentState.current, ...actionAndArgs.args).then((latestState: any)=> {
+        if (actionAndArgs !== undefined) {
+            actionAndArgs.action(currentState.current, ...actionAndArgs.args).then((latestState: any) => {
                 currentState.current = latestState;
                 setState(latestState);
                 runNext();
@@ -102,5 +102,5 @@ export function useAsyncReducerState
         }
     }
 
-    return [state,processing, methods];
+    return [state, processing, methods];
 }
