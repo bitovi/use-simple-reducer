@@ -1,9 +1,9 @@
-import Counter from './container/Counter'
+import Counter from './container/Counter';
 
 const styles: React.CSSProperties = {
   fontFamily: 'sans-serif',
   textAlign: 'center',
-  marginBottom: '70px'
+  marginBottom: '70px',
 };
 
 function App() {
