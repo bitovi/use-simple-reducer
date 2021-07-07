@@ -12,22 +12,26 @@ async function subtractFromState(state: { count: number }, num: number) {
 }
 
 let shouldThrowError = true
+
 async function errorAction(state: { count: number }, num: number) {
-  if (shouldThrowError)
+  if (shouldThrowError) {
     throw new Error("This action has failed being executed");
+  }
   return { count: 0 };
 }
+
 let result: any
 let waitForNextUpdate: any
 beforeEach(() => {
- ({ result, waitForNextUpdate}  = renderHook(
+  ({ result, waitForNextUpdate } = renderHook(
     () => useSimpleReducer({ count: 0 }, {
       add: addToState,
       subtract: subtractFromState,
       fail: errorAction
     })
   )
-)})
+  )
+})
 
 test('basics', async () => {
 

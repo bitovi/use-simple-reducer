@@ -66,9 +66,9 @@ export function useSimpleReducer
     ] {
 
     const [state, setState] = useState(initialState);
-    const [queue, setQueue] = useState<Queue>({isActive :false, runningAction: null, pendingActions: []});
+    const [queue, setQueue] = useState<Queue>({ isActive: false, runningAction: null, pendingActions: [] });
     const [error, setError] = useState<Error | null>(null)
-    const {current: currentQueue} = useRef<ActionAndArgs[]>([]);
+    const { current: currentQueue } = useRef<ActionAndArgs[]>([]);
     const isProccessing = useRef(false);
     const currentState = useRef<any>(state);
 
@@ -94,7 +94,7 @@ export function useSimpleReducer
     function runNext() {
         const actionAndArgs = currentQueue.shift();
         if (actionAndArgs !== undefined) {
-            setQueue({...queue, isActive: true, runningAction: actionAndArgs, pendingActions: [...currentQueue]});
+            setQueue({ ...queue, isActive: true, runningAction: actionAndArgs, pendingActions: [...currentQueue] });
             actionAndArgs.action(currentState.current, ...actionAndArgs.args).then((latestState: any) => {
                 currentState.current = latestState;
                 setError(null)
@@ -104,7 +104,7 @@ export function useSimpleReducer
                 const pendingActions = [...currentQueue]
                 currentQueue.splice(0, currentQueue.length)
                 isProccessing.current = false;
-                setQueue({...queue, isActive: false, runningAction: null, pendingActions: []});
+                setQueue({ ...queue, isActive: false, runningAction: null, pendingActions: [] });
                 setError({
                     reason: err,
                     failedAction: actionAndArgs,
@@ -117,7 +117,7 @@ export function useSimpleReducer
             );
         } else {
             isProccessing.current = false;
-            setQueue({...queue, isActive: false, runningAction: null, pendingActions: []});
+            setQueue({ ...queue, isActive: false, runningAction: null, pendingActions: [] });
         }
     }
     function runActions(actionsAndArgs: ActionAndArgs[]) {
