@@ -1,5 +1,12 @@
 # use-simple-reducer
 
+[![Build](https://img.shields.io/github/workflow/status/bitovi/use-simple-reducer/Build%20and%20Test%20Library?style=plastic)](https://github.com/bitovi/use-simple-reducer/actions/workflows/build_test_library.yml)
+[![Version](https://img.shields.io/npm/v/@bitovi/use-async-reducer-state?style=plastic)](https://www.npmjs.com/package/@bitovi/use-async-reducer-state)
+[![Types](https://img.shields.io/npm/types/@bitovi/use-async-reducer-state?style=plastic)](https://www.npmjs.com/package/@bitovi/use-async-reducer-state)
+[![Size](https://img.shields.io/bundlephobia/min/@bitovi/use-async-reducer-state?style=plastic)](https://www.npmjs.com/package/@bitovi/use-async-reducer-state)
+[![Dependencies](https://img.shields.io/badge/Dependencies-None-brightgreen.svg?style=flat)](https://www.npmjs.com/package/@bitovi/use-async-reducer-state)
+[![Pull Requests welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com/)
+
 `useSimpleReducer` is a simple async state mechanism for ReactJS. It's
 designed to be used for managing service state data and result in easy-to-test reducer methods.
 
