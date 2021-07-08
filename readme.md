@@ -35,32 +35,20 @@ In your component, call `useSimpleReducer` with:
 ```js
 function Counter() {
   const [state, actions, queue, error] = useSimpleReducer(
-      // initial state
-      {count: 0},
-      // collection of reducer methods
-      {
-          async add(state, amountToAdd ){
-              return { ...state, count: state.count + amountToAdd };
-          },
-          async subtract(state, amountToSubtract ){
-              // Performing a GET request to fetch an offset value to be subtracted from 'amountToSubract'
-              fetch("https://counter.com/offset")
-              .then(response => response.json())
-              .then(amount => return { ...state, count: (state.count - amountToSubtract - amount.offset) })
-          }
-      }
-   )
-
-   return(
-   <div>
-      <button onClick={()=> actions.add(2)}>Two Steps Forward</button>
-      <button onClick={()=> actions.subtract(1)}>One Step Back</button>
-      <div>
-          <p>Steps: {state.count}</p>
-          <div>{isActive ? <Loader /> : "Processing completed"}</div>
-      </div>
-  </div>
-  )
+    // initial state
+    { count: 0 },
+    // collection of reducer methods
+    {
+      async add(state, amountToAdd) {
+        return { ...state, count: state.count + amountToAdd };
+      },
+      async subtract(state, amountToSubtract) {
+        // calling an asynchronous api before returning the new state
+        const offset = await getOffset();
+        return { ...state, count: state.count - amountToSubtract - offset };
+      },
+    },
+  );
 }
 ```
 
