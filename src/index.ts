@@ -12,7 +12,7 @@ interface BaseActions<RetType> {
 // Given a parameter type, makes a first argument with that type
 type FunctionForFirstParamType<ParamType> = (arg0: ParamType) => void;
 // Give an initial state, if it is a promise it will return the non error return type of it. Otherwise, it returns the initial state
-type FunctionForInitialStateType<StateType> = StateType extends PromiseLike<infer IS> ? IS : StateType;
+type FunctionForInitialStateType<StateType> = StateType extends PromiseLike<infer IS> ? IS | null : StateType;
 // A user-defined type guard to check whether the initialState is a Promise
 function isInitialStatePromise(initialState: { [key: string]: any }): initialState is Promise<{ [key: string]: any }> {
   return initialState && Object.prototype.toString.call(initialState) === '[object Promise]';
@@ -29,13 +29,14 @@ export function useAsyncReducerState<
   useState = reactUseState,
 ): [
   // Return state
-  FunctionPromiseReturnType<Actions> | FunctionForInitialStateType<InitialState> | null,
+  FunctionPromiseReturnType<Actions> | FunctionForInitialStateType<InitialState>,
   // Processing
   boolean,
   // Methods
   // Returns an object, for each key of the passed value ...
   {
-    [PropertyType in keyof Actions]: FunctionForFirstParamType< // Returns a function whose first argument is
+    [PropertyType in keyof Actions]: FunctionForFirstParamType<
+      // Returns a function whose first argument is
       // The first parameter type
       Parameters<
         // For the specific function for an action
@@ -54,9 +55,7 @@ export function useAsyncReducerState<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const [state, setState] = useState(
-    isInitialStatePromise(initialState) ? null : (initialState as FunctionForInitialStateType<InitialState>),
-  );
+  const [state, setState] = useState(initialState as FunctionForInitialStateType<InitialState>);
   const [processing, setProcessing] = useState(false);
 
   const isProccessing = useRef(false);
