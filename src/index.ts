@@ -1,5 +1,5 @@
 import { useState as reactUseState, useRef, useEffect } from 'react';
-
+import useIfMounted from './hooks/useIfMounted';
 // Given an an object of functions and each function returns a promise, creates a combined type for all return values
 type FunctionPromiseReturnType<T> = T extends { [key: string]: (...args: any[]) => PromiseLike<infer RT> }
   ? RT
@@ -57,7 +57,7 @@ export function useAsyncReducerState<
 
   const [state, setState] = useState(initialState as FunctionForInitialStateType<InitialState>);
   const [processing, setProcessing] = useState(false);
-
+  const ifMounted = useIfMounted();
   const isProccessing = useRef(false);
   const currentState = useRef<any>(state);
 
@@ -89,9 +89,11 @@ export function useAsyncReducerState<
     const actionAndArgs = queue.shift();
     if (actionAndArgs !== undefined) {
       actionAndArgs.action(currentState.current, ...actionAndArgs.args).then((latestState: any) => {
-        currentState.current = latestState;
-        setState(latestState);
-        runNext();
+        ifMounted(() => {
+          currentState.current = latestState;
+          setState(latestState);
+          runNext();
+        });
       });
     } else {
       isProccessing.current = false;
