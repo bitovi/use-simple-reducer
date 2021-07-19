@@ -16,26 +16,27 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
+const updateCountOnServer = function (time: number) {
+  // Mocking updating the count state on the server with a wait
+  return new Promise((resolve) => {
+    setTimeout(resolve, time);
+  });
+};
 const initialState: CounterState = {
   count: 0,
 };
 function Counter() {
-  const wait = function (time: number) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, time);
-    });
-  };
   const [state, isProcessing, actions] = useAsyncReducerState(
     // initial state
     initialState,
     // collection of reducer methods
     {
       async add(state: CounterState, amountToAdd: number): Promise<CounterState> {
-        await wait(1000);
+        await updateCountOnServer(1000);
         return { ...state, count: state.count + amountToAdd };
       },
       async subtract(state: CounterState, amountToSubtract: number): Promise<CounterState> {
-        await wait(1000);
+        await updateCountOnServer(1000);
         return { ...state, count: state.count - amountToSubtract };
       },
     },
