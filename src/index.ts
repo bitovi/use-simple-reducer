@@ -1,4 +1,4 @@
-import { useState as reactUseState, useRef } from 'react';
+import { useState as reactUseState, useRef, useEffect } from 'react';
 import useIfMounted from './hooks/useIfMounted';
 // Given an an object of functions and each function returns a promise, creates a combined type for all return values
 type FunctionPromiseReturnType<T> = T extends { [key: string]: (...args: any[]) => PromiseLike<infer RT> }
@@ -11,6 +11,12 @@ interface BaseActions<RetType> {
 }
 // Given a parameter type, makes a first argument with that type
 type FunctionForFirstParamType<ParamType> = (arg0: ParamType) => void;
+// Give an initial state, if it is a promise it will return the non error return type of it. Otherwise, it returns the initial state
+type FunctionForInitialStateType<StateType> = StateType extends PromiseLike<infer IS> ? IS | null : StateType;
+// A user-defined type guard to check whether the initialState is a Promise
+function isInitialStatePromise(initialState: { [key: string]: any }): initialState is Promise<{ [key: string]: any }> {
+  return initialState && Object.prototype.toString.call(initialState) === '[object Promise]';
+}
 
 export function useAsyncReducerState<
   // State of the initial state
@@ -23,7 +29,7 @@ export function useAsyncReducerState<
   useState = reactUseState,
 ): [
   // Return state
-  FunctionPromiseReturnType<Actions> | InitialState,
+  FunctionPromiseReturnType<Actions> | FunctionForInitialStateType<InitialState>,
   // Processing
   boolean,
   // Methods
@@ -39,7 +45,17 @@ export function useAsyncReducerState<
     >;
   },
 ] {
-  const [state, setState] = useState(initialState);
+  useEffect(() => {
+    if (isInitialStatePromise(initialState)) {
+      initialState.then((response: any) => {
+        setState(response);
+        currentState.current = response;
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const [state, setState] = useState(initialState as FunctionForInitialStateType<InitialState>);
   const [processing, setProcessing] = useState(false);
   const ifMounted = useIfMounted();
   const isProccessing = useRef(false);
