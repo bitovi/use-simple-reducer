@@ -1,5 +1,5 @@
-import { useState as reactUseState, useRef } from 'react';
-
+import { useState as reactUseState, useRef, useEffect } from 'react';
+import useIfMounted from './hooks/useIfMounted';
 // Given an an object of functions and each function returns a promise, creates a combined type for all return values
 type FunctionPromiseReturnType<T> = T extends { [key: string]: (...args: any[]) => PromiseLike<infer RT> }
   ? RT
@@ -11,6 +11,12 @@ interface BaseActions<RetType> {
 }
 // Given a parameter type, makes a first argument with that type
 type FunctionForFirstParamType<ParamType> = (arg0: ParamType) => void;
+// Give an initial state, if it is a promise it will return the non error return type of it. Otherwise, it returns the initial state
+type FunctionForInitialStateType<StateType> = StateType extends PromiseLike<infer IS> ? IS | null : StateType;
+// A user-defined type guard to check whether the initialState is a Promise
+function isInitialStatePromise(initialState: { [key: string]: any }): initialState is Promise<{ [key: string]: any }> {
+  return initialState && Object.prototype.toString.call(initialState) === '[object Promise]';
+}
 type Nullable<T> = T | null;
 // An object of a name string, an action callback function and an array of arguments being passed to the action
 interface ActionAndArgs {
@@ -44,7 +50,7 @@ export function useSimpleReducer<
   useState = reactUseState,
 ): [
   // Return state
-  FunctionPromiseReturnType<Actions> | InitialState,
+  FunctionPromiseReturnType<Actions> | FunctionForInitialStateType<InitialState>,
   // Methods
   // Returns an object, for each key of the passed value ...
   {
@@ -62,10 +68,20 @@ export function useSimpleReducer<
   // Error
   Nullable<Error>,
 ] {
-  const [state, setState] = useState(initialState);
+  useEffect(() => {
+    if (isInitialStatePromise(initialState)) {
+      initialState.then((response: any) => {
+        setState(response);
+        currentState.current = response;
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const [state, setState] = useState(initialState as FunctionForInitialStateType<InitialState>);
   const [queue, setQueue] = useState<Queue>({ isActive: false, runningAction: null, pendingActions: [] });
   const [error, setError] = useState<Error | null>(null);
   const { current: currentQueue } = useRef<ActionAndArgs[]>([]);
+  const ifMounted = useIfMounted();
   const isProccessing = useRef(false);
   const currentState = useRef<any>(state);
 
@@ -97,23 +113,27 @@ export function useSimpleReducer<
       actionAndArgs
         .action(currentState.current, ...actionAndArgs.args)
         .then((latestState: any) => {
-          currentState.current = latestState;
-          setError(null);
-          setState(latestState);
-          runNext();
+          ifMounted(() => {
+            currentState.current = latestState;
+            setError(null);
+            setState(latestState);
+            runNext();
+          });
         })
         .catch((err: any) => {
-          const pendingActions = [...currentQueue];
-          currentQueue.splice(0, currentQueue.length);
-          isProccessing.current = false;
-          setQueue({ ...queue, isActive: false, runningAction: null, pendingActions: [] });
-          setError({
-            reason: err,
-            failedAction: actionAndArgs,
-            pendingActions,
-            runFailedAction: () => runActions([actionAndArgs]),
-            runPendingActions: () => runActions(pendingActions),
-            runAllActions: () => runActions([actionAndArgs, ...pendingActions]),
+          ifMounted(() => {
+            const pendingActions = [...currentQueue];
+            currentQueue.splice(0, currentQueue.length);
+            isProccessing.current = false;
+            setQueue({ ...queue, isActive: false, runningAction: null, pendingActions: [] });
+            setError({
+              reason: err,
+              failedAction: actionAndArgs,
+              pendingActions,
+              runFailedAction: () => runActions([actionAndArgs]),
+              runPendingActions: () => runActions(pendingActions),
+              runAllActions: () => runActions([actionAndArgs, ...pendingActions]),
+            });
           });
         });
     } else {

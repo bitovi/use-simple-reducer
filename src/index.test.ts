@@ -18,8 +18,17 @@ async function errorAction(state: { count: number }, num: number) {
   return { count: 0 };
 }
 
-let result: any;
-let waitForNextUpdate: any;
+let { result, waitForNextUpdate } = renderHook(() =>
+  useSimpleReducer(
+    { count: 0 },
+    {
+      add: addToState,
+      subtract: subtractFromState,
+      fail: errorAction,
+    },
+  ),
+);
+
 beforeEach(() => {
   ({ result, waitForNextUpdate } = renderHook(() =>
     useSimpleReducer(
