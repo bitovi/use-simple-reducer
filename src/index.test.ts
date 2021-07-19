@@ -22,7 +22,7 @@ test('basics', async () => {
 
   let [currentState, processing, { add, subtract }] = result.current;
 
-  expect(currentState.count).toBe(0);
+  expect(currentState?.count).toBe(0);
 
   // processing update
   act(() => add(2));
@@ -31,7 +31,7 @@ test('basics', async () => {
 
   [currentState, processing, { subtract }] = result.current;
 
-  expect(currentState.count).toBe(2);
+  expect(currentState?.count).toBe(2);
 
   act(() => subtract(1));
 
@@ -39,7 +39,7 @@ test('basics', async () => {
 
   [currentState, processing, { add, subtract }] = result.current;
 
-  expect(currentState.count).toBe(1);
+  expect(currentState?.count).toBe(1);
 });
 
 test('queing', async () => {
@@ -55,7 +55,7 @@ test('queing', async () => {
 
   let [currentState, processing, { add, subtract }] = result.current;
 
-  expect(currentState.count).toBe(0);
+  expect(currentState?.count).toBe(0);
 
   // processing update
   act(() => {
@@ -67,5 +67,5 @@ test('queing', async () => {
 
   [currentState, processing, { add, subtract }] = result.current;
 
-  expect(currentState.count).toBe(1);
+  expect(currentState?.count).toBe(1);
 });
