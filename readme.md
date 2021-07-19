@@ -46,13 +46,13 @@ function Counter() {
     { count: 0 },
     // collection of reducer methods
     {
-      async add(state, amountToAdd) {
+      async add(state: CounterState, amountToAdd: number): Promise<CounterState> {
         return { ...state, count: state.count + amountToAdd };
       },
-      async subtract(state, amountToSubtract) {
+      async subtract(state: CounterState, amountToSubtract: number): Promise<CounterState> {
         // calling an asynchronous api before returning the new state
-        const offset = await getOffset();
-        return { ...state, count: state.count - amountToSubtract - offset };
+        await updateCountOnServer(state.count - amountToSubtract);
+        return { ...state, count: state.count - amountToSubtract };
       },
     },
   );
@@ -78,7 +78,7 @@ return (
     <button onClick={() => actions.subtract(1)}>One Step Back</button>
     <div>
       <p>Steps: {state.count}</p>
-      <div>{isActive ? <Loader /> : 'Processing completed'}</div>
+      <div>{queue.isActive ? <Loader /> : 'Processing completed'}</div>
     </div>
   </div>
 );
@@ -87,7 +87,7 @@ return (
 The argument being passed to `actions` methods here `actions.add(2)` should match the type of the payload argument `amountToAdd` being passed to the reducer method `async add (state, amountToAdd)`
 
 ```js
-async add(state, amountToAdd ){
+async add(state: CounterState, amountToAdd: number): Promise<CounterState>{
     return { ...state, count: state.count + amountToAdd };
 }
 ```

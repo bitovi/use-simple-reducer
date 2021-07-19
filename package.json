@@ -1,6 +1,6 @@
 {
   "name": "@bitovi/use-simple-reducer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A reducer to handle async actions",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
