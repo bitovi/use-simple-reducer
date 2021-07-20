@@ -1,10 +1,10 @@
 # use-simple-reducer
 
 [![Build](https://img.shields.io/github/workflow/status/bitovi/use-simple-reducer/Build%20and%20Test%20Library?style=plastic)](https://github.com/bitovi/use-simple-reducer/actions/workflows/build_test_library.yml)
-[![Version](https://img.shields.io/npm/v/@bitovi/use-async-reducer-state?style=plastic)](https://www.npmjs.com/package/@bitovi/use-async-reducer-state)
-[![Types](https://img.shields.io/npm/types/@bitovi/use-async-reducer-state?style=plastic)](https://www.npmjs.com/package/@bitovi/use-async-reducer-state)
-[![Size](https://img.shields.io/bundlephobia/min/@bitovi/use-async-reducer-state?style=plastic)](https://www.npmjs.com/package/@bitovi/use-async-reducer-state)
-[![Dependencies](https://img.shields.io/badge/Dependencies-None-brightgreen.svg?style=flat)](https://www.npmjs.com/package/@bitovi/use-async-reducer-state)
+[![Version](https://img.shields.io/npm/v/@bitovi/use-simple-reducer?style=plastic)](https://www.npmjs.com/package/@bitovi/use-simple-reducer)
+[![Types](https://img.shields.io/npm/types/@bitovi/use-simple-reducer?style=plastic)](https://www.npmjs.com/package/@bitovi/use-simple-reducer)
+[![Size](https://img.shields.io/bundlephobia/min/@bitovi/use-simple-reducer?style=plastic)](https://www.npmjs.com/package/@bitovi/use-simple-reducer)
+[![Dependencies](https://img.shields.io/badge/Dependencies-None-brightgreen.svg?style=flat)](https://www.npmjs.com/package/@bitovi/use-simple-reducer)
 [![Pull Requests welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](http://makeapullrequest.com/)
 
 `useSimpleReducer` is a simple async state mechanism for ReactJS. It's
@@ -39,17 +39,17 @@ In your component, call `useSimpleReducer` with:
 | `initialState` | any                                                      | The initial state you want to manage.                                                                                                                                                                                                                                                                                                              |
 | `actions`      | {[key: string]: </br> (state: any, payload: any) => any} | A collection of reducer methods, each to be called with </br> the`state` as the first argument and values passed to </br> the `action` method as the second argument. If you are </br> unfamiliar with the reducer pattern you can check out </br> the [redux reducer](https://redux.js.org/tutorials/fundamentals/part-3-state-actions-reducers). |
 
-```js
+```ts
 function Counter() {
   const [state, actions, queue, error] = useSimpleReducer(
     // initial state
     { count: 0 },
     // collection of reducer methods
     {
-      async add(state: CounterState, amountToAdd: number): Promise<CounterState> {
+      async add(state: CounterState, amountToAdd: number) {
         return { ...state, count: state.count + amountToAdd };
       },
-      async subtract(state: CounterState, amountToSubtract: number): Promise<CounterState> {
+      async subtract(state: CounterState, amountToSubtract: number) {
         // calling an asynchronous api before returning the new state
         await updateCountOnServer(state.count - amountToSubtract);
         return { ...state, count: state.count - amountToSubtract };
@@ -86,8 +86,8 @@ return (
 
 The argument being passed to `actions` methods here `actions.add(2)` should match the type of the payload argument `amountToAdd` being passed to the reducer method `async add (state, amountToAdd)`
 
-```js
-async add(state: CounterState, amountToAdd: number): Promise<CounterState>{
+```ts
+async add(state: CounterState, amountToAdd: number){
     return { ...state, count: state.count + amountToAdd };
 }
 ```
@@ -114,7 +114,7 @@ An error object gets returned if any of the reducer methods fails. The cause of 
 
 #### Use
 
-```js
+```jsx
     return (
         <div>
             <button onClick={()=> actions.add(2)}>Two Steps Forward</button>

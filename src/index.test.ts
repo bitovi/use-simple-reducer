@@ -97,7 +97,7 @@ describe('queing', () => {
 
     await waitForNextUpdate();
 
-    [currentState, {}, queue] = result.current;
+    [currentState, { add, subtract }, queue] = result.current;
 
     expect(queue.isActive).toBeFalsy();
   });
@@ -120,7 +120,7 @@ describe('error handling', () => {
 
     await waitForNextUpdate();
 
-    [currentState, {}, queue, error] = result.current;
+    [currentState, { add, subtract, fail }, queue, error] = result.current;
     if (error) {
       const { reason, failedAction, pendingActions, runFailedAction, runPendingActions, runAllActions } = error;
       expect(currentState.count).toBe(1);
@@ -154,7 +154,7 @@ describe('error handling', () => {
 
     await waitForNextUpdate();
 
-    [currentState, {}, queue, error] = result.current;
+    [currentState, { add, subtract, fail }, queue, error] = result.current;
     if (error) {
       const { runFailedAction } = error;
       expect(currentState.count).toBe(1);
@@ -272,7 +272,7 @@ describe('error handling', () => {
 
     await waitForNextUpdate();
 
-    [currentState, { add }, queue, error] = result.current;
+    [currentState, { add, subtract, fail }, queue, error] = result.current;
     if (error) {
       expect(currentState.count).toBe(1);
       act(() => {
