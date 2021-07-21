@@ -1,4 +1,4 @@
-import { useSimpleReducer } from '../reducer/src/index';
+import { useSimpleReducer } from '@bitovi/use-simple-reducer';
 import Button from '../components/Button';
 import Loader from 'react-loader-spinner';
 import Modal from '../components/Modal';
