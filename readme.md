@@ -47,10 +47,10 @@ function Counter() {
     // collection of reducer methods
     {
       async add(state: CounterState, amountToAdd: number) {
+        await updateCountOnServer(state.count + amountToAdd);
         return { ...state, count: state.count + amountToAdd };
       },
       async subtract(state: CounterState, amountToSubtract: number) {
-        // calling an asynchronous api before returning the new state
         await updateCountOnServer(state.count - amountToSubtract);
         return { ...state, count: state.count - amountToSubtract };
       },
@@ -150,4 +150,4 @@ Unless the user calls any of the error recovery methods listed above, a default 
 
 CodeSandBox:
 
-> https://codesandbox.io/s/quizzical-hermann-wtx8j?
+> https://codesandbox.io/s/gifted-elbakyan-g31c3
