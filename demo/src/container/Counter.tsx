@@ -76,11 +76,11 @@ function Counter() {
     // collection of reducer methods
     {
       async add(state: CounterState, amountToAdd: number): Promise<CounterState> {
-        await updateCountOnServer(1000);
+        await updateCountOnServer(2000);
         return { ...state, count: state.count + amountToAdd };
       },
       async subtract(state: CounterState, amountToSubtract: number): Promise<CounterState> {
-        await updateCountOnServer(1000);
+        await updateCountOnServer(2000);
         return { ...state, count: state.count - amountToSubtract };
       },
     },
