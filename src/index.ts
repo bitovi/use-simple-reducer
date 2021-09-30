@@ -98,6 +98,7 @@ export function useSimpleReducer<
           action: actions[actionName],
           args,
         });
+        setQueue({ ...queue, pendingActions: [...currentQueue] });
         if (!isProccessing.current) {
           isProccessing.current = true;
           runNext();

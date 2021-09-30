@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@bitovi/use-simple-reducer": "^0.0.1",
+    "@bitovi/use-simple-reducer": "^0.0.2",
     "@types/node": "^12.20.15",
     "@types/react": "^17.0.11",
     "@types/react-dom": "^17.0.8",
