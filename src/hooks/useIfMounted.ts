@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useRef } from 'react'
 
-const useIfMounted = () => {
+type IfMountedCallback = () => void
+
+const useIfMounted = (): ((func: IfMountedCallback) => void) => {
   const isMounted = useRef(true)
+
   useEffect(
     () => () => {
       isMounted.current = false
@@ -9,11 +12,12 @@ const useIfMounted = () => {
     [],
   )
 
-  const ifMounted = useCallback((func: (...args: any[]) => any) => {
+  const ifMounted = useCallback((func: IfMountedCallback) => {
     if (isMounted.current && func) {
       func()
     }
   }, [])
+
   return ifMounted
 }
 export default useIfMounted
