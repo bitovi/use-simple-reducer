@@ -13,13 +13,19 @@
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "typecheck": "tsc --noEmit",
+    "eslint": "eslint src",
+    "prettier": "prettier --check src",
+    "depcheck": "depcheck ."
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@bitovi/eslint-config": "^1.2.2",
     "@testing-library/react-hooks": "^5.1.2",
     "@types/jest": "^26.0.23",
+    "eslint": "^8.20.0",
     "jest": "26.6.0",
     "prettier": "^2.2.1",
     "react-test-renderer": "^17.0.2",
@@ -34,5 +40,9 @@
   "dependencies": {
     "@types/react": "^17.0.5",
     "react": "^17.0.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": "@bitovi/eslint-config/react"
   }
 }
