@@ -1,5 +1,6 @@
-import { useSimpleReducer } from './use-simple-reducer'
 import { renderHook, act } from '@testing-library/react-hooks'
+
+import { useSimpleReducer } from './use-simple-reducer'
 
 async function addToState(state: { count: number }, num: number) {
   return { count: state.count + num }
@@ -104,19 +105,19 @@ describe('error handling', () => {
 
     await waitForNextUpdate()
 
-    const { reason, failedAction, pendingActions } = result.current[errorIndex]
+    const error = result.current[errorIndex]
 
     expect(result.current[currentStateIndex].count).toBe(1)
     // Check that the error message matches the one being thrown
-    expect(reason.message).toEqual('This action has failed being executed')
+    expect(error?.reason.message).toEqual('This action has failed being executed')
     // Check that the failed action's name and args are correct
-    expect(failedAction.actionName).toEqual('fail')
-    expect(failedAction.args[0]).toBe(1)
+    expect(error?.failedAction.actionName).toEqual('fail')
+    expect(error?.failedAction.args[0]).toBe(1)
     // Check that the number of pending actions in the queue is correct
-    expect(pendingActions?.length).toBe(2)
+    expect(error?.pendingActions?.length).toBe(2)
     // Check that the first pending action's name and args are correct
-    expect(pendingActions[0].actionName).toEqual('add')
-    expect(pendingActions[0].args[0]).toBe(2)
+    expect(error?.pendingActions[0].actionName).toEqual('add')
+    expect(error?.pendingActions[0].args[0]).toBe(2)
   })
 
   test('running the failed action after an error', async () => {
@@ -136,14 +137,14 @@ describe('error handling', () => {
 
     await waitForNextUpdate()
 
-    const { runFailedAction } = result.current[errorIndex]
+    const error = result.current[errorIndex]
 
     expect(result.current[currentStateIndex].count).toBe(1)
 
     shouldThrowError = false
 
     act(() => {
-      runFailedAction()
+      error?.runFailedAction()
     })
 
     await waitForNextUpdate()
@@ -168,12 +169,12 @@ describe('error handling', () => {
 
     await waitForNextUpdate()
 
-    const { runPendingActions } = result.current[errorIndex]
+    const error = result.current[errorIndex]
 
     expect(result.current[currentStateIndex].count).toBe(1)
 
     act(() => {
-      runPendingActions()
+      error?.runPendingActions()
     })
 
     await waitForNextUpdate()
@@ -198,12 +199,12 @@ describe('error handling', () => {
 
     await waitForNextUpdate()
 
-    const { runAllActions } = result.current[errorIndex]
+    const error = result.current[errorIndex]
 
     expect(result.current[currentStateIndex].count).toBe(1)
     shouldThrowError = false
     act(() => {
-      runAllActions()
+      error?.runAllActions()
     })
 
     await waitForNextUpdate()
