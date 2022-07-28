@@ -30,6 +30,7 @@ interface Queue {
   runningAction: Nullable<ActionAndArgs>
   pendingActions: ActionAndArgs[]
 }
+
 // An error object with a message string, an actionAndArgs object and a callback function
 interface Error {
   reason: any

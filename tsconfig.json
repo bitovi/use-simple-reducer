@@ -3,10 +3,9 @@
     "jsx": "preserve",
     "module": "esnext",
     "moduleResolution": "node",
-    "outDir": "./lib",
+    "outDir": "./dist",
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "noEmit": true,
     "declaration": true,
     "incremental": true,
     "strict": false,
@@ -21,5 +20,5 @@
     "skipLibCheck": true
   },
   "include": ["@types", "src"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "src/**/*.test.ts"]
 }

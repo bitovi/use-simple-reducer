@@ -16,7 +16,7 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Typecheck
         run: npm run typecheck
@@ -26,6 +26,9 @@ jobs:
         run: npm run prettier
       - name: depcheck
         run: npm run depcheck
+
+      - name: Test
+        run: npm run test
 
       - name: Build
         run: npm run build
