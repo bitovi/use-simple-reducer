@@ -7,7 +7,7 @@
   "types": "dist/use-simple-reducer.d.ts",
   "scripts": {
     "test": "jest --config jestconfig.json",
-    "build": "vite build && tsc",
+    "build": "tsc && vite build",
     "typecheck": "tsc --noEmit",
     "eslint": "eslint src",
     "prettier": "prettier --check src",
@@ -23,6 +23,7 @@
     "jest": "26.6.0",
     "prettier": "^2.2.1",
     "react-test-renderer": "^17.0.2",
+    "rollup-plugin-typescript2": "^0.32.1",
     "ts-jest": "^26.5.6",
     "tslint-config-prettier": "^1.18.0",
     "typescript": "^4.2.4",
