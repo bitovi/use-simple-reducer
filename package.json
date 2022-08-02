@@ -3,7 +3,7 @@
   "version": "0.0.2",
   "description": "A reducer to handle async actions",
   "module": "dist/use-simple-reducer.es.js",
-  "main": "dist/use-simple-reducer.js",
+  "main": "dist/use-simple-reducer.cjs.js",
   "types": "dist/use-simple-reducer.d.ts",
   "scripts": {
     "test": "jest --config jestconfig.json",
