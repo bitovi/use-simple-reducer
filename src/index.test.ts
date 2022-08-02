@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react-hooks'
 
-import { useSimpleReducer } from './use-simple-reducer'
+import { useSimpleReducer } from './index'
 
 async function addToState(state: { count: number }, num: number) {
   return { count: state.count + num }

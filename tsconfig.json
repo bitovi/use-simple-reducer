@@ -2,7 +2,7 @@
   "compilerOptions": {
     "jsx": "preserve",
     "module": "esnext",
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "outDir": "./dist",
     "target": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -20,5 +20,5 @@
     "skipLibCheck": true
   },
   "include": ["@types", "src"],
-  "exclude": ["node_modules", "src/**/*.test.ts"]
+  "exclude": ["node_modules"]
 }

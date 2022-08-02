@@ -1,13 +1,15 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
-import typescript from 'rollup-plugin-typescript2'
+import react from '@vitejs/plugin-react'
+import dts from 'vite-plugin-dts'
 
 export default defineConfig((configEnv) => ({
-  plugins: [typescript()],
+  plugins: [react(), dts({ insertTypesEntry: true })],
   build: {
+    sourcemap: true,
     lib: {
-      formats: ['es', 'cjs', 'umd'],
-      entry: resolve(__dirname, 'src/use-simple-reducer.ts'),
+      formats: ['es', 'umd'],
+      entry: resolve(__dirname, 'src/index.ts'),
       name: 'use-simple-reducer',
       fileName: (format) => `use-simple-reducer.${format}.js`,
     },
