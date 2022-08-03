@@ -5,15 +5,7 @@ body:
   - type: markdown
     attributes:
       value: Found a bug? Thanks for taking the time to report it and help make useSimpleReducer better! Fill out the form below to help our team get on it.
-  - type: checkboxes
-    attributes:
-      label: Before Continuing
-      description: Before we begin, let's make sure your issue hasn't been solved already.
-      options:
-        - label: I checked to see if my issue is in [open issues](https://github.com/bitovi/use-simple-reducer/issues)
-          required: true
-        - label: I am using the latest version of [useSimpleReducer](https://www.npmjs.com/package/@bitovi/use-simple-reducer)
-          required: true
+
   - type: checkboxes
     attributes:
       label: Environment check
@@ -29,27 +21,26 @@ body:
         ## Environment
         What environments were you in when you encoutnered this bug?
 
-#   - type: input
-#     attributes:
-#       label: Node
-#       description: What version of Node?
-#       placeholder: 16
-#     validations:
-#       required: true
+  - type: input
+    attributes:
+      label: Node
+      description: What version of Node?
+      placeholder: 16
+    validations:
+      required: true
 
-#   - type: input
-#     attributes:
-#       label: React
-#       description: What version of React?
-#       placeholder: 17
-#     validations:
-#       required: true
+  - type: input
+    attributes:
+      label: React
+      description: What version of React?
+      placeholder: 17
+    validations:
+      required: true
 
-#   - type: textarea
-#     attributes:
-#       label: Additional Environment Information
-#       description: Any other environment configurations we should be aware of?
-
+  - type: textarea
+    attributes:
+      label: Additional Environment Information
+      description: Any other environment configurations we should be aware of?
 #   - type: textarea
 #     attributes:
 #       label: Actual Behavior
