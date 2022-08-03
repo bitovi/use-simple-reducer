@@ -41,20 +41,20 @@ body:
     attributes:
       label: Additional Environment Information
       description: Any other environment configurations we should be aware of?
-#   - type: textarea
-#     attributes:
-#       label: Actual Behavior
-#       description: What's the bug you're experiencing? Are there any logs or errors?
-#     validations:
-#       required: true
 
-#   - type: textarea
-#     attributes:
-#       label: Expected behavior
-#       description: What do you expect to happen instead?
-#     validations:
-#       required: true
+  - type: textarea
+    attributes:
+      label: Actual Behavior
+      description: What's the bug you're experiencing? Are there any logs or errors?
+    validations:
+      required: true
 
+  - type: textarea
+    attributes:
+      label: Expected behavior
+      description: What do you expect to happen instead?
+    validations:
+      required: true
 #  - type: markdown
 #     attributes:
 #       value: |
