@@ -1,6 +1,6 @@
-name: 'Bug Report'
-description: I experience unexpected behavior using useSimpleReducer.
-labels: ['bug']
+name: "Bug Report"
+description: "I experience unexpected behavior using useSimpleReducer."
+labels: ["bug"]
 body:
   - type: markdown
     attributes:
