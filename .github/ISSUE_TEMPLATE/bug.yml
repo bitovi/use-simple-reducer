@@ -42,6 +42,11 @@ body:
       label: Additional Environment Information
       description: Any other environment configurations we should be aware of?
 
+  - type: markdown
+    attributes:
+      value: |
+        ## Bug Description
+
   - type: textarea
     attributes:
       label: Actual Behavior
@@ -55,10 +60,10 @@ body:
       description: What do you expect to happen instead?
     validations:
       required: true
-#  - type: markdown
-#     attributes:
-#       value: |
-#         ## Reproduction
+ - type: markdown
+    attributes:
+      value: |
+        ## Reproduction
 
 #   - type: input
 #     attributes:
