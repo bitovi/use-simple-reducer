@@ -4,7 +4,7 @@ labels: ['bug']
 body:
   - type: markdown
     attributes:
-      value: Found a bug? Thanks for taking the time to report it and help make useSimpleReducer better! Fill out the form below to help our team get on it.
+      value: Found a bug? Thanks for taking the time to report it and help make useSimpleReducer better! Fill out the form below to help our team get started.
 
   - type: checkboxes
     attributes:
