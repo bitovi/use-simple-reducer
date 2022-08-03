@@ -4,7 +4,7 @@
   "description": "A reducer to handle async actions",
   "main": "./dist/use-simple-reducer.umd.js",
   "module": "./dist/use-simple-reducer.es.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/use-simple-reducer.d.ts",
   "exports": {
     ".": {
       "import": "./dist/use-simple-reducer.es.js",
@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "test": "jest --config jestconfig.json",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "typecheck": "tsc --noEmit",
     "eslint": "eslint src",
     "prettier": "prettier --check src",
@@ -27,6 +27,7 @@
   "license": "ISC",
   "devDependencies": {
     "@bitovi/eslint-config": "^1.2.2",
+    "@rollup/plugin-typescript": "^8.3.4",
     "@testing-library/react-hooks": "^5.1.2",
     "@types/jest": "^26.0.23",
     "@types/react": "^17.0.5",
@@ -39,12 +40,11 @@
     "react-test-renderer": "^17.0.2",
     "ts-jest": "^26.5.6",
     "typescript": "^4.2.4",
-    "vite": "^3.0.3",
-    "vite-plugin-dts": "^1.4.1"
+    "vite": "^3.0.3"
   },
   "peerDependencies": {
-    "@types/react": "^17.0.5",
-    "react": "^17.0.2"
+    "@types/react": "^16.0.0",
+    "react": "^16.3.0"
   },
   "eslintConfig": {
     "root": true,
