@@ -60,22 +60,23 @@ body:
       description: What do you expect to happen instead?
     validations:
       required: true
- - type: markdown
+
+  - type: markdown
     attributes:
       value: |
         ## Reproduction
 
-#   - type: input
-#     attributes:
-#       label: CodeSandbox
-#       description: A link to a CodeSandbox or Repository where this error can be reproduced. You can use [Bitovi's useSimpleReducer Template](https://codesandbox.io/s/github/bitovi/use-simple-reducer/tree/error-handling/demo) to create one quickly.
-#       placeholder: i.e. https://codesandbox.io/s/github/bitovi/use-simple-reducer/tree/error-handling/demo
-#     validations:
-#       required: true
+  - type: input
+    attributes:
+      label: CodeSandbox
+      description: A link to a CodeSandbox or Repository where this error can be reproduced. You can use [Bitovi's useSimpleReducer Template](https://codesandbox.io/s/github/bitovi/use-simple-reducer/tree/error-handling/demo) to create one quickly.
+      placeholder: i.e. https://codesandbox.io/s/github/bitovi/use-simple-reducer/tree/error-handling/demo
+    validations:
+      required: true
 
-#   - type: textarea
-#     attributes:
-#       label: Steps to Reproduce
-#       description: How can we reproduce this issue? Let us know below.
-#     validations:
-#       required: true
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this issue? Let us know below.
+    validations:
+      required: true
