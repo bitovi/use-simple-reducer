@@ -1,0 +1,38 @@
+name: Feature Request
+description: Propose a feature or improvement.
+labels: ['feature']
+body:
+  - type: markdown
+    attributes:
+      value: Have a suggestion on how we can make an improvement or have a feature you'd like to see added? Thanks for taking the time to report it and help make useSimpleReducer better! Fill out the form below to help our team get started.
+
+  - type: dropdown
+    attributes:
+      label: Scope
+      multiple: false
+      options:
+        - 'New Feature'
+        - 'Improvement'
+    validations:
+      required: true
+
+  - type: checkboxes
+    attributes:
+      label: Compatibility
+      description: Check if your proposal is a breaking change. Leave this field unchecked if not sure.
+      options:
+        - label: This is a breaking change
+          required: false
+
+  - type: textarea
+    attributes:
+      label: Feature description
+      description: Describe the feature you're suggesting.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Use Cases
+      description: What do you want to use this for? What shortcomings exist with current approaches?
+    validations:
+      required: true
