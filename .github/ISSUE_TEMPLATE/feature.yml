@@ -32,7 +32,7 @@ body:
       required: true
   - type: textarea
     attributes:
-      label: Motivations/Use Cases
+      label: Motivations/Use Case
       description: What do you want to use this for? What shortcomings exist with current approaches?
     validations:
       required: true
