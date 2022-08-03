@@ -60,7 +60,7 @@ body:
   - type: input
     attributes:
       label: CodeSandbox
-      description: To expidite the process, provide a link to a CodeSandbox or Repository where this error can be reproduced. You can use [Bitovi's useSimpleReducer Template](https://codesandbox.io/s/github/bitovi/use-simple-reducer/tree/error-handling/demo) to create one quickly.
+      description: To expedite the process, provide a link to a CodeSandbox or Repository where this error can be reproduced. You can use [Bitovi's useSimpleReducer Template](https://codesandbox.io/s/github/bitovi/use-simple-reducer/tree/error-handling/demo) to create one quickly.
       placeholder: i.e. https://codesandbox.io/s/github/bitovi/use-simple-reducer/tree/error-handling/demo
 
   - type: textarea
