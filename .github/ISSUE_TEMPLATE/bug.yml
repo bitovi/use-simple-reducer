@@ -6,15 +6,6 @@ body:
     attributes:
       value: Found a bug? Thanks for taking the time to report it and help make useSimpleReducer better! Fill out the form below to help our team get started.
 
-  - type: checkboxes
-    attributes:
-      label: Environment check
-      options:
-        - label: I'm using the [latest](https://github.com/mswjs/msw/releases/latest) `msw` version
-          required: true
-        - label: I'm using Node.js version 14 or higher
-          required: true
-
   - type: markdown
     attributes:
       value: |
