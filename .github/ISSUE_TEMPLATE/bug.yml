@@ -14,20 +14,20 @@ body:
           required: true
         - label: I am using the latest version of [useSimpleReducer](https://www.npmjs.com/package/@bitovi/use-simple-reducer)
           required: true
-#   - type: checkboxes
-#     attributes:
-#       label: Environment check
-#       options:
-#         - label: I'm using the [latest](https://github.com/mswjs/msw/releases/latest) `msw` version
-#           required: true
-#         - label: I'm using Node.js version 14 or higher
-#           required: true
+  - type: checkboxes
+    attributes:
+      label: Environment check
+      options:
+        - label: I'm using the [latest](https://github.com/mswjs/msw/releases/latest) `msw` version
+          required: true
+        - label: I'm using Node.js version 14 or higher
+          required: true
 
-#   - type: markdown
-#     attributes:
-#       value: |
-#         ## Environment
-#         What environments were you in when you encoutnered this bug?
+  - type: markdown
+    attributes:
+      value: |
+        ## Environment
+        What environments were you in when you encoutnered this bug?
 
 #   - type: input
 #     attributes:
