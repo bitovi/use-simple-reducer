@@ -5,16 +5,15 @@ body:
   - type: markdown
     attributes:
       value: Found a bug? Thanks for taking the time to report it and help make useSimpleReducer better! Fill out the form below to help our team get on it.
-#   - type: checkboxes
-#     attributes:
-#       label: Before Continuing
-#       description: Before we begin, let's make sure your issue hasn't been solved already.
-#       options:
-#         - label: I checked to see if my issue is in [open issues](https://github.com/bitovi/use-simple-reducer/issues)
-#           required: true
-#         - label: I am using the latest version of [useSimpleReducer](https://www.npmjs.com/package/@bitovi/use-simple-reducer)
-#           required: true
-
+  - type: checkboxes
+    attributes:
+      label: Before Continuing
+      description: Before we begin, let's make sure your issue hasn't been solved already.
+      options:
+        - label: I checked to see if my issue is in [open issues](https://github.com/bitovi/use-simple-reducer/issues)
+          required: true
+        - label: I am using the latest version of [useSimpleReducer](https://www.npmjs.com/package/@bitovi/use-simple-reducer)
+          required: true
 #   - type: checkboxes
 #     attributes:
 #       label: Environment check
