@@ -7,6 +7,12 @@
 - [ ] I checked to make sure there aren't other open [Pull Requests](../../../pulls) for the same update/change?
 - [ ] I checked to make sure this PR follows the Project's [Definition of Done](contributing/todo)
 
+## Definition of Done
+
+- [ ] Tests - Unit tests for all new and existing features
+- [ ] Documentation - All new features should be documented and any changes should be reflected in the existing documentation
+- [ ] Code Review
+
 ## Description
 
 **Related Issue:** <!-- This project requires an issue for all PRs, add the related issues here -->
