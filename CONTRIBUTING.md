@@ -1,10 +1,10 @@
 ## Overview
 
-Thank you for your interest in contributing to useSimpleReducer! useSimpleReducer is maintained by Bitovi but depends on contributors like you! Whether you’re interested in fixing issues, answering questions, or spreading the word, we welcome you to our community!
+Thank you for your interest in contributing to `useSimpleReducer`! `useSimpleReducer` is maintained by Bitovi but depends on contributors like you! Whether you’re interested in fixing issues, answering questions, or spreading the word, we welcome you to our community!
 
 Contributing to an open source project can be an intimidating experience. All contributions from all types of contributors are welcome. We’re committed to making it as pleasant and rewarding as possible. We’re happy to set up a pairing session to show you how to fix a bug or write a feature.
 
-If you have any questions, you can always join our Slack and reach us in the #react channel.
+If you have any questions, you can always join our [Slack Community](https://www.bitovi.com/community/slack) and reach us in the #react channel.
 
 ## Code of Conduct
 
@@ -14,7 +14,7 @@ Please read our Code of Conduct in its entirety before participating in our comm
 
 ## Getting Help
 
-Our forums and Slack (#react channel) are the best places to ask questions. The core team regularly checks both and there are other users who generously help others.
+Our Slack (#react channel) are the best places to ask questions. The core team regularly checks slack and there are other users who generously help others.
 
 If you’re interested in contributing to `useSimpleReducer`, the core team is happy to pair with you to fix a bug or write a new feature! Please either message us on Slack or the forums.
 
@@ -25,3 +25,7 @@ In addition to whatever requirements are already assigned to an issue, each PR i
 - [ ] Tests - Unit tests for all new and existing features
 - [ ] Documentation - All new features should be documented and any changes should be reflected in the existing documentation
 - [ ] Code Review
+
+## Contributing features and bug fixes
+
+Features may be accepted but must first be approved (labeled "help wanted") by a core project maintainer in the suggestion issue. Features with language design impact or adequately satisfied with external tools will not be accepted.

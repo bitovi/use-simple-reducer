@@ -3,9 +3,8 @@
 
 ## Checklist before requesting a review
 
-- [ ] I have followed the guidelines in the [Contributing document](todo)
-- [ ] I checked to make sure there aren't other open [Pull Requests](../../../pulls) for the same update/change?
-- [ ] I checked to make sure this PR follows the Project's [Definition of Done](contributing/todo)
+- [ ] I have followed the guidelines in the [Contributing document](../CONTRIBUTING.md)
+- [ ] I checked to make sure there aren't other open [Pull Requests](https://github.com/bitovi/use-simple-reducer/pulls) for the same update/change?
 
 ## Definition of Done
 
