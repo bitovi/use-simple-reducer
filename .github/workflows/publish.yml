@@ -4,8 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       segment:
-        description: 'The version segment to increment: major, minor, or patch.'
+        description: 'The version segment to increment: major, minor, patch, premajor, preminor, prepatch, or prerelease'
         required: true
+      preId:
+        description: 'Only used when premajor, preminor, or prepatch is added in segment. The name appended to the version bump to represent a pre-release (default: "")'
 
 jobs:
   build:
@@ -36,7 +38,16 @@ jobs:
         run: |
           git config --local user.email "Workflow: ${{ env.GITHUB_WORKFLOW }}[bot]"
           git config --local user.name "${{ env.GITHUB_WORKFLOW }}[bot]@workflow"
-          npm version ${{ github.event.inputs.segment }} -m "Publish v%s"
+          if [ "${{ github.event.inputs.segment}}" == pre* ]; then
+            PRE_ID_COMMAND_STR=""
+            PRE_ID="${{ github.event.inputs.preId}}"
+            if [ -n "$PRE_ID" ]; then
+                PRE_ID_COMMAND_STR="--preid $PRE_ID"
+            fi
+            npm version ${{ github.event.inputs.segment }} $PRE_ID_COMMAND_STR -m "Publish v%s"
+          else
+            npm version ${{ github.event.inputs.segment }} -m "Publish v%s"
+          fi
       - name: Publish to NPM Registry
         uses: JS-DevTools/npm-publish@v1
         with:
