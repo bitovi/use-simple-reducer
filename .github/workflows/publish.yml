@@ -38,11 +38,10 @@ jobs:
         run: |
           git config --local user.email "Workflow: ${{ env.GITHUB_WORKFLOW }}[bot]"
           git config --local user.name "${{ env.GITHUB_WORKFLOW }}[bot]@workflow"
-          PRE_ID_COMMAND_STR=""
-          if [ "${{ github.event.inputs.segment}}" == pre* ]; then
+          if [[ "prepatch" == pre* ]]; then
             PRE_ID="${{ github.event.inputs.preId}}"
-            if [ -n "$PRE_ID" ]; then
-                PRE_ID_COMMAND_STR="--preid $PRE_ID"
+            if [[ -n "$PRE_ID" ]]; then
+              PRE_ID_COMMAND_STR="--preid $PRE_ID"
             fi
           fi
           npm version ${{ github.event.inputs.segment }} $PRE_ID_COMMAND_STR -m "Publish v%s"
