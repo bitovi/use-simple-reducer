@@ -6,7 +6,7 @@
 https://github.com/bitovi/use-simple-reducer/tree/main/.github
 
 - [ ] I have followed the guidelines in the [Contributing document](../../tree/main/CONTRIBUTING.md)
-- [ ] I checked to make sure there aren't other open [Pull Requests](../../pulls) for the same update/change
+- [ ] I checked to make sure there are not other open [Pull Requests](../../pulls) for the same update/change
 
 ## Definition of Done
 
