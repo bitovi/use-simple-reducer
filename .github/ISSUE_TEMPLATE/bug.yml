@@ -1,16 +1,16 @@
 name: Bug Report
-description: I experienced unexpected behavior using useSimpleReducer.
+description: I experienced unexpected behavior using this project.
 labels: ['bug']
 body:
   - type: markdown
     attributes:
-      value: Found a bug? Thanks for taking the time to report it and help make useSimpleReducer better! Fill out the form below to help our team get started.
+      value: Found a bug? Thanks for taking the time to report it and help make this project better! Fill out the form below to help our team get started.
 
   - type: markdown
     attributes:
       value: |
         ## Environment
-        What environments were you in when you encoutnered this bug?
+        What environments were you in when you encountered this bug?
 
   - type: input
     attributes:
@@ -22,9 +22,24 @@ body:
 
   - type: input
     attributes:
+      label: NPM
+      description: What version of NPM?
+      placeholder: '8.18.0'
+    validations:
+      required: true
+
+  - type: input
+    attributes:
       label: React
       description: What version of React?
       placeholder: '17'
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Build System
+      description: What meta-frameworks and build systems are you using, and their versions (Next, Vite, Gatsby, etc...)?
     validations:
       required: true
 
@@ -60,7 +75,7 @@ body:
   - type: input
     attributes:
       label: CodeSandbox
-      description: To expedite the process, provide a link to a CodeSandbox or Repository where this error can be reproduced. You can use [Bitovi's useSimpleReducer Template](https://codesandbox.io/s/github/bitovi/use-simple-reducer/tree/error-handling/demo) to create one quickly.
+      description: To expedite the process, provide a link to a **minimal** CodeSandbox or Repository where this error can be reproduced. You can use [Bitovi's project Template](https://codesandbox.io/s/bitovi-use-simple-reducer--basic-91ywsu) to create one quickly.
       placeholder: i.e. https://codesandbox.io/s/github/bitovi/use-simple-reducer/tree/error-handling/demo
 
   - type: textarea

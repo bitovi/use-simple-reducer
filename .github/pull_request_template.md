@@ -3,8 +3,10 @@
 
 ## Checklist before requesting a review
 
-- [ ] I have followed the guidelines in the [Contributing document](../CONTRIBUTING.md)
-- [ ] I checked to make sure there aren't other open [Pull Requests](https://github.com/bitovi/use-simple-reducer/pulls) for the same update/change?
+https://github.com/bitovi/use-simple-reducer/tree/main/.github
+
+- [ ] I have followed the guidelines in the [Contributing document](../../tree/main/CONTRIBUTING.md)
+- [ ] I checked to make sure there aren't other open [Pull Requests](../../pulls) for the same update/change?
 
 ## Definition of Done
 
