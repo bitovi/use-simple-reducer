@@ -1,7 +1,7 @@
 > **Before You Begin**
 > If you have not already please read through the contributing guidelines
 
-## Checklist before requesting a review
+## Checklist Before Requesting a Review
 
 https://github.com/bitovi/use-simple-reducer/tree/main/.github
 
