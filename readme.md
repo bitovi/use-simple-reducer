@@ -56,15 +56,15 @@ function Counter() {
     // collection of reducer methods
     {
       async add(state: CounterState, amountToAdd: number) {
-        await updateCountOnServer(state.count + amountToAdd);
-        return { ...state, count: state.count + amountToAdd };
+        await updateCountOnServer(state.count + amountToAdd)
+        return { ...state, count: state.count + amountToAdd }
       },
       async subtract(state: CounterState, amountToSubtract: number) {
-        await updateCountOnServer(state.count - amountToSubtract);
-        return { ...state, count: state.count - amountToSubtract };
+        await updateCountOnServer(state.count - amountToSubtract)
+        return { ...state, count: state.count - amountToSubtract }
       },
     },
-  );
+  )
 }
 ```
 
@@ -90,7 +90,7 @@ return (
       <div>{queue.isActive ? <Loader /> : 'Processing completed'}</div>
     </div>
   </div>
-);
+)
 ```
 
 The argument being passed to `actions` methods here `actions.add(2)` should match the type of the payload argument `amountToAdd` being passed to the reducer method `async add (state, amountToAdd)`
@@ -159,7 +159,7 @@ Unless the user calls any of the error recovery methods listed above, a default 
 
 CodeSandBox:
 
-> https://codesandbox.io/s/gifted-elbakyan-g31c3
+> https://codesandbox.io/s/bitovi-use-simple-reducer--basic-91ywsu?file=/src/components/Counter/Counter.tsx
 
 # We want to hear from you.
 

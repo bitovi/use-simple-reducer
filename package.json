@@ -16,6 +16,16 @@
     "src/",
     "!src/**/*.test.ts"
   ],
+  "author": "Bitovi",
+  "homepage": "https://www.bitovi.com/frontend-javascript-consulting/react-consulting",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitovi/use-simple-reducer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bitovi/use-simple-reducer/issues"
+  },
   "scripts": {
     "test": "jest --config jestconfig.json",
     "build": "vite build",
@@ -24,8 +34,6 @@
     "prettier": "prettier --check src",
     "depcheck": "depcheck ."
   },
-  "author": "",
-  "license": "ISC",
   "devDependencies": {
     "@bitovi/eslint-config": "^1.2.2",
     "@rollup/plugin-typescript": "^8.3.4",
