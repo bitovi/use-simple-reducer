@@ -1,6 +1,6 @@
 ## Overview
 
-Thank you for your interest in contributing to this project! this project is maintained by Bitovi but depends on contributors like you! Whether you’re interested in fixing issues, answering questions, or spreading the word, we welcome you to our community!
+Thank you for your interest in contributing to this project! This project is maintained by Bitovi but depends on contributors like you! Whether you’re interested in fixing issues, answering questions, or spreading the word, we welcome you to our community!
 
 Contributing to an open source project can be an intimidating experience. All contributions from all types of contributors are welcome. We’re committed to making it as pleasant and rewarding as possible. We’re happy to set up a pairing session to show you how to fix a bug or write a feature.
 
