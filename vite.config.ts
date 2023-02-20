@@ -1,10 +1,10 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-// import dts from 'vite-plugin-dts'
+
 import typescript from '@rollup/plugin-typescript'
 
-export default defineConfig((configEnv) => ({
+export default defineConfig(() => ({
   plugins: [react(), typescript()],
   build: {
     lib: {

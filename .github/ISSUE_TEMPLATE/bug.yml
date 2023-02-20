@@ -1,0 +1,85 @@
+name: Bug Report
+description: I experienced unexpected behavior using this project.
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: Found a bug? Thanks for taking the time to report it and help make this project better! Fill out the form below to help our team get started.
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Environment
+        What environments were you in when you encountered this bug?
+
+  - type: input
+    attributes:
+      label: Node
+      description: What version of Node?
+      placeholder: '16'
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: NPM
+      description: What version of NPM?
+      placeholder: '8.18.0'
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: React
+      description: What version of React?
+      placeholder: '17'
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Build System
+      description: What meta-frameworks and build systems are you using, and their versions (Next, Vite, Gatsby, etc...)?
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Additional Environment Information
+      description: Any other environment configurations we should be aware of?
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Bug Description
+
+  - type: textarea
+    attributes:
+      label: Actual Behavior
+      description: What's the bug you're experiencing? Are there any logs or errors?
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Expected behavior
+      description: What do you expect to happen instead?
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Reproduction
+
+  - type: input
+    attributes:
+      label: CodeSandbox
+      description: To expedite the process, provide a link to a **minimal** CodeSandbox or Repository where this error can be reproduced. You can use the project template linked in the README to create one quickly..
+
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: How can we reproduce this issue? Let us know below.
+    validations:
+      required: true
