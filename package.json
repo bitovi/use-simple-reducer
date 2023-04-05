@@ -1,6 +1,6 @@
 {
   "name": "@bitovi/use-simple-reducer",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "A reducer to handle async actions",
   "main": "./dist/use-simple-reducer.umd.js",
   "module": "./dist/use-simple-reducer.es.js",
